@@ -1,38 +1,12 @@
 <script>
 import { RouterLink, RouterView } from 'vue-router'
-import Login from './components/Login.vue'
-import { mapState } from 'vuex'
+
 export default {
-  date () {
-    return {
-      isAuth: false
-    }
-  },
-  computed: {
-    ...mapState("users", ["isAuthenticated"])
-  }
+  components : {}
 }
 </script>
 
 <template>
-  <header>
-    <img alt="Vue logo" class="logo" src="@/assets/logo.svg" width="125" height="125" />
-
-    <div class="wrapper">
-      <Login msg="You did it!" />
-
-      <nav>
-        <RouterLink to="/">Dashboard</RouterLink>
-      </nav>
-      <!-- if not authenticated, hide the rest? -->
-      <div v-if="this.isAuth">
-        <h1>
-        dashboard goes here
-      </h1>
-      </div>
-    </div>
-  </header>
-
   <!-- eslint-disable-next-line -->
   <RouterView />
 </template>

@@ -1,6 +1,17 @@
-<script setup>
+<script>
 import { RouterLink, RouterView } from 'vue-router'
 import Login from './components/Login.vue'
+import { mapState } from 'vuex'
+export default {
+  date () {
+    return {
+      isAuth: false
+    }
+  },
+  computed: {
+    ...mapState("users", ["isAuthenticated"])
+  }
+}
 </script>
 
 <template>
@@ -13,6 +24,12 @@ import Login from './components/Login.vue'
       <nav>
         <RouterLink to="/">Dashboard</RouterLink>
       </nav>
+      <!-- if not authenticated, hide the rest? -->
+      <div v-if="this.isAuth">
+        <h1>
+        dashboard goes here
+      </h1>
+      </div>
     </div>
   </header>
 

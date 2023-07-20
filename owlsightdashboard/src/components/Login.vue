@@ -97,8 +97,8 @@ export default {
 <!-- End Login -->
 </template>
 
-<style scoped>
-h1 {
+<style>
+/* h1 {
   font-weight: 500;
   font-size: 2.6rem;
   position: relative;
@@ -119,5 +119,5 @@ h3 {
   .greetings h3 {
     text-align: left;
   }
-}
+} */
 </style>

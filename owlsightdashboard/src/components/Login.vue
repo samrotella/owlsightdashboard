@@ -104,7 +104,7 @@ export default {
           <template class="flex justify-content-center p-3">
             <Button class="" v-on:click="signUp()"  label="Create Account" />
           </template>
-          <template class="flex justify-content-center p-3">
+          <template class="flex justify-content-center p-1">
             <Button v-on:click="switchToSignIn()" label="Have an Account? Sign In" link />
           </template>
       </template>
@@ -137,7 +137,7 @@ export default {
           <template class="flex justify-content-center p-3">
             <Button class="" v-on:click="signIn()"  label="Create Account" />
           </template>
-          <template class="flex justify-content-center p-3">
+          <template class="flex justify-content-center p-1">
             <Button v-on:click="switchToSignUp()" label="New Here? Sign Up!" link />
           </template>
       </template>

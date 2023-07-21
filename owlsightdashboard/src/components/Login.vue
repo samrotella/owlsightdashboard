@@ -7,11 +7,18 @@ export default {
     return {
       username: '',
       password: '',
+      signUp: false
     }
   },
   methods: {
     // ...mapActions("meeting", ["updateUserNameAction", "getMeetings"]),
     // ...mapMutations('user', ['setUserAuthState', 'setFirebaseUserGuid']),
+    switchToSignUp(){
+      this.signUp = true;
+    },
+    switchToSignIn(){
+      this.signUp = false;
+    },
     signUp () {
       let { auth, createUserWithEmailAndPassword } = firebaseAuth;
       createUserWithEmailAndPassword(auth, this.username, this.password)
@@ -33,7 +40,6 @@ export default {
     },
     signIn () {
       let { auth, signInWithEmailAndPassword } = firebaseAuth;
-      this.loginErrors = null;
 
       signInWithEmailAndPassword(auth, this.username, this.password).then((userCredential) => {
         const { uid } = userCredential.user;
@@ -43,6 +49,7 @@ export default {
         this.username = null;
         this.password = null;
         console.log('in');
+        this.$router.push('/dashboard')
         // this.$router.push({ name: 'HomeDashboard' });
       }).catch((error) => {
         console.log('error logging in');
@@ -66,9 +73,11 @@ export default {
   }
 }
 </script>
+<!-- Sign In -->
 
+<!-- Sign Up -->
 <template class="grid">
-  <Card class="col-6 col-offset-3">
+  <Card v-if="this.signUp" class="col-6 col-offset-3">
       <template #title> Sign Up </template>
       <template #content>
           <template class="block">
@@ -94,6 +103,42 @@ export default {
           </template>
           <template class="flex justify-content-center p-3">
             <Button class="" v-on:click="signUp()"  label="Create Account" />
+          </template>
+          <template class="flex justify-content-center p-3">
+            <Button v-on:click="switchToSignIn()" label="Have an Account? Sign In" link />
+          </template>
+      </template>
+  </Card>
+
+  <Card v-else class="col-6 col-offset-3">
+      <template #title> Sign In </template>
+      <template #content>
+          <template class="block">
+            <label for="firstname1">Username</label>
+            <template class="flex pt-1">
+              <input 
+                v-model="username" 
+                class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full" 
+                type="email"
+                placeholder="email@gmail.com">
+            </template>
+          </template>
+
+          <template class="block pt-3">
+            <label for="lastname1">Password</label>
+            <template class="flex pt-1">
+              <input 
+                v-model="password" 
+                class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full" 
+                type="password"
+                placeholder="Password">
+            </template>
+          </template>
+          <template class="flex justify-content-center p-3">
+            <Button class="" v-on:click="signIn()"  label="Create Account" />
+          </template>
+          <template class="flex justify-content-center p-3">
+            <Button v-on:click="switchToSignUp()" label="New Here? Sign Up!" link />
           </template>
       </template>
   </Card>

@@ -27,3 +27,6 @@ npm run dev
 ```sh
 npm run build
 ```
+### Notes
+    * https://www.primefaces.org/primeflex/padding
+    * https://primevue.org/installation

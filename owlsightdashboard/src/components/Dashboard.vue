@@ -1,4 +1,4 @@
-<template class="grid">
+<template class="">
     <Menubar>
         <template #start>
             <img alt="logo" src="../assets/logo.svg" height="40" class="mr-2" />
@@ -8,11 +8,26 @@
         </template>
     </Menubar>
     <!-- eslint-disable-next-line -->
-    <div>
-        <div class="card flex justify-content-center">
-            <Chart type="pie" :data="chartData" :options="chartOptions" class="w-full md:w-30rem" />
-        </div>
-    </div>
+    <template class="grid">
+        <Card class="col-4">
+            <template #title> Browsers </template>
+            <template #content>
+                <div class="card flex justify-content-center">
+                    <Chart type="pie" :data="chartData" :options="chartOptions" class="w-full md:w-30rem" />
+                </div>
+            </template>
+        </Card>
+    <!-- eslint-disable-next-line -->
+        <Card class="col-4">
+            <template #title> Browsers </template>
+            <template #content>
+                <div class="card flex justify-content-center">
+                    <Chart type="pie" :data="chartData" :options="chartOptions" class="w-full md:w-30rem" />
+                </div>
+            </template>
+        </Card>
+    </template>
+   
 </template>
 
 <script>

@@ -4,34 +4,40 @@
             <img alt="logo" src="../assets/Owlsight.png" height="75" class="mr-2" />
         </template>
         <template #end>
+            <!-- todo sign out -->
             <Button v-on:click="x()" severity="secondary" label="Signout" text />
         </template>
     </Menubar>
+
     <!-- Date Range -->
     <template class="grid pt-3">
-        <div class="col-offset-9 card flex">
-            <Calendar v-model="dates" selectionMode="range" :manualInput="false" />
+        <div class="col-offset-1 card flex">
+            <Calendar v-model="dates" selectionMode="range" :manualInput="false" showIcon />
         </div>
     </template>
+
     <!-- eslint-disable-next-line -->
     <template class="grid pt-3">
         <!-- Total Unique Visits Chart -->
-        <Card class="col-4 col-offset-1">
+        <Card class="col-5 col-offset-1">
             <template #title> Total Unique Visits </template>
             <!-- eslint-disable-next-line -->
             <template #subtitle> 300,000 <h5 style="color: rgb(18, 173, 10);">+3.2%</h5> </template>
             <template #content>
                 <div class="card">
-                    <Chart type="line" :data="chartData" :options="chartOptions" class="h-20rem" />
+                    <Chart type="line" :data="chartDataUniqueVisit" :options="chartOptionsUniqueVisit" class="h-20rem" />
                 </div>
             </template>
         </Card>
         <!-- eslint-disable-next-line -->
-        <Card class="col-4 col-offset-2">
+        <Card class="col-5 col-offset-0 p-3">
             <template #title> Page Visits </template>
             <template #content>
-                <div class="card flex justify-content-center">
-                    <Chart type="pie" :data="chartData" :options="chartOptions" class="w-full md:w-30rem" />
+                <div class="card">
+                    <DataTable :value="pages" tableStyle="min-width: 20rem">
+                        <Column field="URLs" header="Pages"></Column>
+                        <Column field="visits" header="Total Visits"></Column>
+                    </DataTable>
                 </div>
             </template>
         </Card>
@@ -40,21 +46,24 @@
     <!-- eslint-disable-next-line -->
     <template class="grid pt-4">
             <!-- eslint-disable-next-line -->
-        <Card class="col-4 col-offset-1">
+        <Card class="col-5 col-offset-1 p-3">
             <template #title> Sources </template>
             <template #content>
-                <div class="card flex justify-content-center">
-                    <Chart type="pie" :data="chartData" :options="chartOptions" class="w-full md:w-30rem" />
+                <div class="card">
+                    <DataTable :value="sources" tableStyle="min-width: 20rem">
+                        <Column field="URLs" header="Pages"></Column>
+                        <Column field="leads" header="Total Leads"></Column>
+                    </DataTable>
                 </div>
             </template>
         </Card>
 
         <!-- eslint-disable-next-line -->
-        <Card class="col-4 col-offset-2">
+        <Card class="col-5 col-offset-0">
             <template #title> Browsers </template>
             <template #content>
                 <div class="card flex justify-content-center">
-                    <Chart type="pie" :data="chartData" :options="chartOptions" class="w-full md:w-30rem" />
+                    <Chart type="pie" :data="chartDataBrowsers" :options="chartOptionsBrowsers" class="w-full md:w-30rem" />
                 </div>
             </template>
         </Card>
@@ -67,8 +76,8 @@ export default {
     name: 'Welcome',
     data () {
         return {
-            chartData: null,
-            chartOptions: {
+            chartDataBrowsers: null,
+            chartOptionsBrowsers: {
                 plugins: {
                     legend: {
                         labels: {
@@ -77,17 +86,52 @@ export default {
                     }
                 }
             },
-            dates: null
+            chartDataUniqueVisit: null,
+            chartOptionsUniqueVisit: {
+                plugins: {
+                    legend: {
+                        labels: {
+                            usePointStyle: true
+                        }
+                    }
+                }
+            },
+            dates: null,
+            pages: null,
+            sources: null
         }
     },
     mounted() {
-        this.chartData = this.setChartData();
+        this.chartDataBrowsers = this.setChartDataBrowsers();
+        this.chartDataUniqueVisit = this.setchartDataUniqueVisit();
+        this.pages = [{URLs: '/home', visits: 100}, 
+                        {URLs: '/about', visits: 15}, 
+                        {URLs: '/conact', visits: 25},
+                        {URLs: '/reports', visits: 225}];
+        this.sources = [{URLs: 'www.google.com', leads: 100}, 
+                        {URLs: 'www.linkedin.com', leads: 15},
+                        {URLs: 'www.reddit.com', leads: 153},
+                        {URLs: 'www.yahoo.com', leads: 125}];
     },
     methods: {
         getUser() {
             return 'sam';
         },
-        setChartData() {
+        setChartDataBrowsers() {
+            const documentStyle = getComputedStyle(document.body);
+
+            return {
+                labels: ['Chrome', 'Safari', 'Firefox', 'Other'],
+                datasets: [
+                    {
+                        data: [540, 325, 702, 34],
+                        backgroundColor: [documentStyle.getPropertyValue('--blue-500'), documentStyle.getPropertyValue('--yellow-500'), documentStyle.getPropertyValue('--green-500'), documentStyle.getPropertyValue('--red-500')],
+                        hoverBackgroundColor: [documentStyle.getPropertyValue('--blue-400'), documentStyle.getPropertyValue('--yellow-400'), documentStyle.getPropertyValue('--green-400'), documentStyle.getPropertyValue('--red-500')]
+                    }
+                ]
+            };
+        },
+        setchartDataUniqueVisit() {
             const documentStyle = getComputedStyle(document.body);
 
             return {

@@ -8,6 +8,10 @@ import Menubar from 'primevue/menubar';
 import InputText from 'primevue/inputtext';
 import Chart from 'primevue/chart';
 import Calendar from 'primevue/calendar';
+import DataTable from 'primevue/datatable';
+import Column from 'primevue/column';
+import ColumnGroup from 'primevue/columngroup';
+import Row from 'primevue/row';
 import "primevue/resources/themes/lara-light-indigo/theme.css";
 import "/node_modules/primeflex/primeflex.css";
 
@@ -20,6 +24,10 @@ app.component('Menubar', Menubar);
 app.component('InputText', InputText);
 app.component('Chart', Chart);
 app.component('Calendar', Calendar);
+app.component('DataTable', DataTable);
+app.component('Column', Column);
+app.component('ColumnGroup', ColumnGroup);
+app.component('Row', Row);
 app.use(router)
 app.use(PrimeVue);
 

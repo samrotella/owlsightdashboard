@@ -1,5 +1,4 @@
 <script>
-import { useFirestore } from 'vuefire'
 import { firebaseAuth } from '@/api/firebaseauth.js';
 
 export default {
@@ -68,9 +67,40 @@ export default {
 }
 </script>
 
-<template>
+<template class="grid">
+  <Card class="col-6 col-offset-3">
+      <template #title> Sign Up </template>
+      <template #content>
+          <template class="block">
+            <label for="firstname1">Username</label>
+            <template class="flex pt-1">
+              <input 
+                v-model="username" 
+                class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full" 
+                type="email"
+                placeholder="email@gmail.com">
+            </template>
+          </template>
+
+          <template class="block pt-3">
+            <label for="lastname1">Password</label>
+            <template class="flex pt-1">
+              <input 
+                v-model="password" 
+                class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full" 
+                type="password"
+                placeholder="Password">
+            </template>
+          </template>
+          <template class="flex justify-content-center p-3">
+            <Button class="" v-on:click="signUp()"  label="Create Account" />
+          </template>
+      </template>
+  </Card>
+</template>
+
   <!-- Login -->
-  <div class="">
+  <!-- <div class="">
     <input 
     v-model="username" 
     class="input" 
@@ -87,15 +117,9 @@ export default {
     <span class="">
       <i class=""></i>
     </span>
-    <button 
-      v-on:click="signUp()" 
-      class="">
-        Create Account
-    </button>
-  </div>
+  </div> -->
 
 <!-- End Login -->
-</template>
 
 <style>
 /* h1 {

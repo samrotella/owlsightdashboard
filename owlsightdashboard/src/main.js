@@ -7,6 +7,7 @@ import Card from "primevue/card"
 import Menubar from 'primevue/menubar';
 import InputText from 'primevue/inputtext';
 import Chart from 'primevue/chart';
+import Calendar from 'primevue/calendar';
 import "primevue/resources/themes/lara-light-indigo/theme.css";
 import "/node_modules/primeflex/primeflex.css";
 
@@ -18,6 +19,7 @@ app.component('Card', Card);
 app.component('Menubar', Menubar);
 app.component('InputText', InputText);
 app.component('Chart', Chart);
+app.component('Calendar', Calendar);
 app.use(router)
 app.use(PrimeVue);
 

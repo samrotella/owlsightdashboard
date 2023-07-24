@@ -24,9 +24,9 @@
     <template class="grid pt-3">
         <!-- Total Unique Visits Chart -->
         <Card class="col-5 col-offset-1">
-            <template #title> Total Unique Visits </template>
+            <template #title> Total Visits </template>
             <!-- eslint-disable-next-line -->
-            <template #subtitle> 300,000 <h5 style="color: rgb(18, 173, 10);">+3.2%</h5> </template>
+            <template #subtitle> {{ totalVisits }} <h5 style="color: rgb(18, 173, 10);">+3.2%</h5> </template>
             <template #content>
                 <div class="card">
                     <Chart type="line" :data="chartDataUniqueVisit" :options="chartOptionsUniqueVisit" class="h-20rem" />
@@ -85,6 +85,7 @@ export default {
         return {
             theName: null,
             chartDataBrowsers: null,
+            totalVisits: null,
             chartOptionsBrowsers: {
                 plugins: {
                     legend: {
@@ -127,6 +128,7 @@ export default {
         // you have one. Use User.getToken() instead.
         const uid = user.uid;
         }
+        this.totalVisits = this.getTotalVisits();
     },
     mounted() {
         this.chartDataBrowsers = this.setChartDataBrowsers();
@@ -168,6 +170,9 @@ export default {
             }).finally(() => {
                 this.$router.push('/')
             });
+        },
+        getTotalVisits() {
+            return 1;
         },
         setChartDataBrowsers() {
             const documentStyle = getComputedStyle(document.body);

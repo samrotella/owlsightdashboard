@@ -3,9 +3,13 @@
         <template #start>
             <img alt="logo" src="../assets/Owlsight.png" height="75" class="mr-2" />
         </template>
+        
         <template #end>
             <!-- todo sign out -->
-            <Button v-on:click="x()" severity="secondary" label="Signout" text />
+            <Button v-on:click="signOut()" severity="secondary" label="Signout" text />
+            <template class="flex">
+                Welcome, {{ theName }}!
+            </template>
         </template>
     </Menubar>
 
@@ -72,10 +76,14 @@
 </template>
 
 <script>
+import { firebaseAuth } from '@/api/firebaseauth.js';
+import { getAuth } from "firebase/auth";
+
 export default {
     name: 'Welcome',
     data () {
         return {
+            theName: null,
             chartDataBrowsers: null,
             chartOptionsBrowsers: {
                 plugins: {
@@ -101,6 +109,25 @@ export default {
             sources: null
         }
     },
+    beforeMount (){
+        const auth = getAuth();
+        const user = auth.currentUser;
+        if (user !== null) {
+        // The user object has basic properties such as display name, email, etc.
+        const displayName = user.displayName;
+        const email = user.email;
+        const photoURL = user.photoURL;
+        const emailVerified = user.emailVerified;
+
+        console.log(email);
+        this.theName = email;
+
+        // The user's ID, unique to the Firebase project. Do NOT use
+        // this value to authenticate with your backend server, if
+        // you have one. Use User.getToken() instead.
+        const uid = user.uid;
+        }
+    },
     mounted() {
         this.chartDataBrowsers = this.setChartDataBrowsers();
         this.chartDataUniqueVisit = this.setchartDataUniqueVisit();
@@ -115,7 +142,32 @@ export default {
     },
     methods: {
         getUser() {
-            return 'sam';
+            const auth = getAuth();
+            const user = auth.currentUser;
+            if (user !== null) {
+            // The user object has basic properties such as display name, email, etc.
+            const displayName = user.displayName;
+            const email = user.email;
+            const photoURL = user.photoURL;
+            const emailVerified = user.emailVerified;
+
+            this.theName = displayName;
+
+            // The user's ID, unique to the Firebase project. Do NOT use
+            // this value to authenticate with your backend server, if
+            // you have one. Use User.getToken() instead.
+            const uid = user.uid;
+            }
+        },
+        signOut () {
+            let { auth, signOut } = firebaseAuth;
+            signOut(auth).then(() => {
+                console.log('signed out');
+            }).catch(function (error) {
+                console.log('couldnt sign out ' + error);
+            }).finally(() => {
+                this.$router.push('/')
+            });
         },
         setChartDataBrowsers() {
             const documentStyle = getComputedStyle(document.body);

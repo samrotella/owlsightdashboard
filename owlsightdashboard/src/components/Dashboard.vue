@@ -24,9 +24,9 @@
     <template class="grid pt-3">
         <!-- Total Unique Visits Chart -->
         <Card class="col-5 col-offset-1">
-            <template #title> Total Visits </template>
+            <template #title> Total Unique Visits </template>
             <!-- eslint-disable-next-line -->
-            <template #subtitle> {{ totalVisits }} <h5 style="color: rgb(18, 173, 10);">+3.2%</h5> </template>
+            <template #subtitle> {{ data.uniqueCount }} <h5 style="color: rgb(18, 173, 10);">+3.2%</h5> </template>
             <template #content>
                 <div class="card">
                     <Chart type="line" :data="chartDataUniqueVisit" :options="chartOptionsUniqueVisit" class="h-20rem" />
@@ -78,6 +78,7 @@
 <script>
 import { firebaseAuth } from '@/api/firebaseauth.js';
 import { getAuth } from "firebase/auth";
+import { data } from '../store/modules/data.js'
 
 export default {
     name: 'Welcome',
@@ -107,7 +108,8 @@ export default {
             },
             dates: null,
             pages: null,
-            sources: null
+            sources: null,
+            data
         }
     },
     beforeMount (){

@@ -131,6 +131,7 @@ export default {
         const uid = user.uid;
         }
         this.totalVisits = this.getTotalVisits();
+        this.data.getUniqueCount();
     },
     mounted() {
         this.chartDataBrowsers = this.setChartDataBrowsers();

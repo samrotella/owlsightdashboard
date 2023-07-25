@@ -2,7 +2,7 @@ import { reactive } from 'vue'
 import Axios from "axios";
 
 export const data = reactive({
-    uniqueCount: 112,
+    uniqueCount: null,
     getUniqueCount() {
         return new Promise((resolve, reject) => {
         Axios.get(`https://owlsight-api.onrender.com/totalUniqueVisits`).then((response) => {

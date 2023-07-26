@@ -36,6 +36,7 @@
         <!-- eslint-disable-next-line -->
         <Card class="col-5 col-offset-0 p-3">
             <template #title> Page Visits </template>
+            <!-- <template #title> {{ data.pageVisitCount[0].count }} </template> -->
             <template #content>
                 <div class="card">
                     <DataTable :value="pages" tableStyle="min-width: 20rem">
@@ -107,7 +108,7 @@ export default {
                 }
             },
             dates: null,
-            pages: null,
+            pages: [],
             sources: null,
             data
         }
@@ -132,14 +133,22 @@ export default {
         }
         this.totalVisits = this.getTotalVisits();
         this.data.getUniqueCount();
+        this.data.getPageVisitsWithCount().then(() => {
+            for (let index = 0; index < data.pageVisitCount.length; index++) {
+
+                this.pages.push({URLs: data.pageVisitCount[index]._id, visits: data.pageVisitCount[index].count});   
+            }
+        });
     },
     mounted() {
         this.chartDataBrowsers = this.setChartDataBrowsers();
         this.chartDataUniqueVisit = this.setchartDataUniqueVisit();
-        this.pages = [{URLs: '/home', visits: 100}, 
-                        {URLs: '/about', visits: 15}, 
-                        {URLs: '/conact', visits: 25},
-                        {URLs: '/reports', visits: 225}];
+        // for (let index = 0; index < array.length; index++) {
+        //     const element = array[index];
+            
+        // }
+        
+
         this.sources = [{URLs: 'www.google.com', leads: 100}, 
                         {URLs: 'www.linkedin.com', leads: 15},
                         {URLs: 'www.reddit.com', leads: 153},

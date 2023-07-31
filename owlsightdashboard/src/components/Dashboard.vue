@@ -104,12 +104,14 @@ export default {
                         labels: {
                             usePointStyle: true
                         }
-                    }
+                    },
                 }
             },
             dates: null,
             pages: [],
             sources: null,
+            // Update this with the query value from the date picker filter
+            chartDataUniqueVisitLabel: [],
             data
         }
     },
@@ -133,6 +135,7 @@ export default {
         }
         this.totalVisits = this.getTotalVisits();
         this.data.getUniqueCount();
+        this.data.getChartDataUniqueVisitData();
         this.data.getPageVisitsWithCount().then(() => {
             for (let index = 0; index < data.pageVisitCount.length; index++) {
 
@@ -203,16 +206,36 @@ export default {
         setchartDataUniqueVisit() {
             const documentStyle = getComputedStyle(document.body);
 
+            const theData = this.data.dataUniqueVisitData
+
+            // Labels have to be the last 7 days (including today)
+            // Data needs to be total unique visits from each day
+                // That should add up to the total (the subtitle)
             return {
-                labels: ['Chrome', 'Safari', 'Firefox', 'Other'],
-                datasets: [
-                    {
-                        data: [540, 325, 702, 34],
-                        backgroundColor: [documentStyle.getPropertyValue('--blue-500'), documentStyle.getPropertyValue('--yellow-500'), documentStyle.getPropertyValue('--green-500'), documentStyle.getPropertyValue('--red-500')],
-                        hoverBackgroundColor: [documentStyle.getPropertyValue('--blue-400'), documentStyle.getPropertyValue('--yellow-400'), documentStyle.getPropertyValue('--green-400'), documentStyle.getPropertyValue('--red-500')]
-                    }
-                ]
-            };
+                labels: this.LastDays(),
+                    datasets: [{
+                        data: [1, 1, 2]
+                    }], 
+            }
+        },
+        LastDays () {
+            for (var i=0; i<7; i++) {
+                var d = new Date();
+                d.setDate(d.getDate() - i);
+                let x = this.formatDate(d);
+                this.chartDataUniqueVisitLabel.push(x)
+            }
+            return(this.chartDataUniqueVisitLabel);
+        },
+        formatDate(date){
+            var dd = date.getDate();
+            var mm = date.getMonth()+1;
+            var yyyy = date.getFullYear();
+            if(dd<10) {dd='0'+dd}
+            if(mm<10) {mm='0'+mm}
+            date = mm+'-'+dd+'-'+yyyy;
+            let stringDate = date.toString();
+            return stringDate;
         }
     },
 }

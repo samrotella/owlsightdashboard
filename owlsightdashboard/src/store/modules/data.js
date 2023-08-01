@@ -4,8 +4,6 @@ import Axios from "axios";
 export const data = reactive({
     uniqueCount: null,
     pageVisitCount: [],
-    //not used atm
-    dataUniqueVisitData: [],
     result: [],
     getUniqueCount() {
         return new Promise((resolve, reject) => {
@@ -31,37 +29,6 @@ export const data = reactive({
                 });
             });
     },
-    //not used atm
-    getChartDataUniqueVisitData() {
-
-        let array = [];
-        
-        // function Last7Days () {
-            for (var i=0; i<7; i++) {
-                var d = new Date();
-                d.setDate(d.getDate() - i);
-                this.result.push( formatDate(d) )
-            }
-        
-            // return(result.join(','));
-         //}
-        return new Promise((resolve, reject) => {
-            
-            Axios.get(`https://owlsight-api.onrender.com/chartDataUniqueVisitData/${this.result.join(',')}`).then((response) => {
-                for (let index = 0; index < response.data.length; index++) {
-                    array.push(response.data[index]);
-                }
-
-                this.dataUniqueVisitData = array.slice();
-                console.log('testtest ' + JSON.stringify(this.dataUniqueVisitData));
-                // not quite right 
-                
-                resolve(response.data);
-            }).catch((error) => {
-                reject(error);
-            });
-        });
-    }
 })
 
 function formatDate(date){

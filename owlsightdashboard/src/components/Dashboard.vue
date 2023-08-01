@@ -136,10 +136,6 @@ export default {
         }
         this.totalVisits = this.getTotalVisits();
         this.data.getUniqueCount();
-        //not used atm
-        this.data.getChartDataUniqueVisitData().then(() => {
-            this.chartDataUniqueVisit = this.setchartDataUniqueVisit();
-        });
         this.data.getPageVisitsWithCount().then(() => {
             for (let index = 0; index < data.pageVisitCount.length; index++) {
                 this.pages.push({URLs: data.pageVisitCount[index]._id, visits: data.pageVisitCount[index].count});   
@@ -198,29 +194,6 @@ export default {
                     }
                 ]
             };
-        },
-        // almost working, now just got to get the dates to match...
-        // somehow need to insert 0
-        //not used atm
-        setchartDataUniqueVisit() {
-            var arr = [];
-            var ld = this.LastDays()
-            for (let index = 0; index < ld.length; index++) {
-                console.log('ld ' + ld[index]._id)
-            }
-            for (let index = 0; index < this.data.dataUniqueVisitData.length; index++) {
-                    console.log('rd: ' + this.data.dataUniqueVisitData[index]._id);   
-            }
-            for (let index = 0; index < this.data.dataUniqueVisitData.length; index++) {
-                arr.push(this.data.dataUniqueVisitData[index].size);
-            }
-            return {
-                labels: this.LastDays(),
-                    datasets: [{
-                        data: arr
-                    }] 
-            }
-            
         },
         LastDays () {
             for (var i=0; i<7; i++) {

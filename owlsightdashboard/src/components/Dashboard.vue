@@ -14,29 +14,30 @@
     </Menubar>
 
     <!-- Date Range -->
-    <template class="grid pt-3">
+    <!-- <template class="grid pt-3">
         <div class="col-offset-1 card flex">
             <Calendar v-model="dates" selectionMode="range" :manualInput="false" showIcon />
         </div>
-    </template>
+    </template> -->
 
     <!-- eslint-disable-next-line -->
     <template class="grid pt-3">
         <!-- Total Unique Visits Chart -->
-        <Card class="col-5 col-offset-1">
+        <!-- <Card class="col-5 col-offset-1">
             <template #title> Total Unique Visits </template>
-            <!-- eslint-disable-next-line -->
-            <template #subtitle> {{ data.uniqueCount }} <h5 style="color: rgb(18, 173, 10);">+3.2%</h5> </template>
+            
+            <template #subtitle> {{ data.uniqueCount }} </template>
             <template #content>
                 <div class="card">
                     <Chart type="line" :data="chartDataUniqueVisit" :options="chartOptionsUniqueVisit" class="h-20rem" />
                 </div>
             </template>
-        </Card>
+        </Card> -->
         <!-- eslint-disable-next-line -->
-        <Card class="col-5 col-offset-0 p-3">
+
+        <Card class="col-10 col-offset-1 p-3">
             <template #title> Page Visits </template>
-            <!-- <template #title> {{ data.pageVisitCount[0].count }} </template> -->
+            <template #subtitle> Unique Page Visits: {{ data.uniqueCount }} </template>
             <template #content>
                 <div class="card">
                     <DataTable :value="pages" tableStyle="min-width: 20rem">
@@ -135,25 +136,18 @@ export default {
         }
         this.totalVisits = this.getTotalVisits();
         this.data.getUniqueCount();
+        //not used atm
         this.data.getChartDataUniqueVisitData().then(() => {
             this.chartDataUniqueVisit = this.setchartDataUniqueVisit();
         });
         this.data.getPageVisitsWithCount().then(() => {
             for (let index = 0; index < data.pageVisitCount.length; index++) {
-
                 this.pages.push({URLs: data.pageVisitCount[index]._id, visits: data.pageVisitCount[index].count});   
             }
         });
     },
     mounted() {
         this.chartDataBrowsers = this.setChartDataBrowsers();
-        
-        // for (let index = 0; index < array.length; index++) {
-        //     const element = array[index];
-            
-        // }
-        
-
         this.sources = [{URLs: 'www.google.com', leads: 100}, 
                         {URLs: 'www.linkedin.com', leads: 15},
                         {URLs: 'www.reddit.com', leads: 153},
@@ -207,8 +201,16 @@ export default {
         },
         // almost working, now just got to get the dates to match...
         // somehow need to insert 0
+        //not used atm
         setchartDataUniqueVisit() {
             var arr = [];
+            var ld = this.LastDays()
+            for (let index = 0; index < ld.length; index++) {
+                console.log('ld ' + ld[index]._id)
+            }
+            for (let index = 0; index < this.data.dataUniqueVisitData.length; index++) {
+                    console.log('rd: ' + this.data.dataUniqueVisitData[index]._id);   
+            }
             for (let index = 0; index < this.data.dataUniqueVisitData.length; index++) {
                 arr.push(this.data.dataUniqueVisitData[index].size);
             }
@@ -225,7 +227,7 @@ export default {
                 var d = new Date();
                 d.setDate(d.getDate() - i);
                 let x = this.formatDate(d);
-                this.chartDataUniqueVisitLabel.push(x)
+                this.chartDataUniqueVisitLabel.push({_id: x, size: null})
             }
             return(this.chartDataUniqueVisitLabel);
         },

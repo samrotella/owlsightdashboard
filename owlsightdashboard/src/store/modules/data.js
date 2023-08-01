@@ -4,6 +4,7 @@ import Axios from "axios";
 export const data = reactive({
     uniqueCount: null,
     pageVisitCount: [],
+    //not used atm
     dataUniqueVisitData: [],
     result: [],
     getUniqueCount() {
@@ -25,12 +26,12 @@ export const data = reactive({
                     this.pageVisitCount.push(response.data[index]);
                 }
                 resolve(response.data);
-                console.log(response.data)
                 }).catch((error) => {
                     reject(error);
                 });
             });
     },
+    //not used atm
     getChartDataUniqueVisitData() {
 
         let array = [];

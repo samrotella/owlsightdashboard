@@ -206,19 +206,17 @@ export default {
             };
         },
         // almost working, now just got to get the dates to match...
+        // somehow need to insert 0
         setchartDataUniqueVisit() {
-            console.log('the data: ' + JSON.stringify(this.data.dataUniqueVisitData.length))
             var arr = [];
-
             for (let index = 0; index < this.data.dataUniqueVisitData.length; index++) {
-                // const element = this.data.dataUniqueVisitData[index];
                 arr.push(this.data.dataUniqueVisitData[index].size);
             }
             return {
-                    labels: this.LastDays(),
-                        datasets: [{
-                            data: arr
-                        }], 
+                labels: this.LastDays(),
+                    datasets: [{
+                        data: arr
+                    }] 
             }
             
         },

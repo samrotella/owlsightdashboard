@@ -135,7 +135,9 @@ export default {
         }
         this.totalVisits = this.getTotalVisits();
         this.data.getUniqueCount();
-        this.data.getChartDataUniqueVisitData();
+        this.data.getChartDataUniqueVisitData().then(() => {
+            this.chartDataUniqueVisit = this.setchartDataUniqueVisit();
+        });
         this.data.getPageVisitsWithCount().then(() => {
             for (let index = 0; index < data.pageVisitCount.length; index++) {
 
@@ -145,7 +147,7 @@ export default {
     },
     mounted() {
         this.chartDataBrowsers = this.setChartDataBrowsers();
-        this.chartDataUniqueVisit = this.setchartDataUniqueVisit();
+        
         // for (let index = 0; index < array.length; index++) {
         //     const element = array[index];
             
@@ -203,20 +205,22 @@ export default {
                 ]
             };
         },
+        // almost working, now just got to get the dates to match...
         setchartDataUniqueVisit() {
-            const documentStyle = getComputedStyle(document.body);
+            console.log('the data: ' + JSON.stringify(this.data.dataUniqueVisitData.length))
+            var arr = [];
 
-            const theData = this.data.dataUniqueVisitData
-
-            // Labels have to be the last 7 days (including today)
-            // Data needs to be total unique visits from each day
-                // That should add up to the total (the subtitle)
-            return {
-                labels: this.LastDays(),
-                    datasets: [{
-                        data: [1, 1, 2]
-                    }], 
+            for (let index = 0; index < this.data.dataUniqueVisitData.length; index++) {
+                // const element = this.data.dataUniqueVisitData[index];
+                arr.push(this.data.dataUniqueVisitData[index].size);
             }
+            return {
+                    labels: this.LastDays(),
+                        datasets: [{
+                            data: arr
+                        }], 
+            }
+            
         },
         LastDays () {
             for (var i=0; i<7; i++) {

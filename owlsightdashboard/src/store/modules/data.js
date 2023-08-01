@@ -32,6 +32,8 @@ export const data = reactive({
             });
     },
     getChartDataUniqueVisitData() {
+
+        let array = [];
         
         // function Last7Days () {
             for (var i=0; i<7; i++) {
@@ -46,9 +48,13 @@ export const data = reactive({
             
             Axios.get(`https://owlsight-api.onrender.com/chartDataUniqueVisitData/${this.result.join(',')}`).then((response) => {
                 for (let index = 0; index < response.data.length; index++) {
-                    //this.dataUniqueVisitData.push(response.data[index]._id);
-                    console.log(response.data[index]._id)
+                    array.push(response.data[index]);
                 }
+
+                this.dataUniqueVisitData = array.slice();
+                console.log('testtest ' + JSON.stringify(this.dataUniqueVisitData));
+                // not quite right 
+                
                 resolve(response.data);
             }).catch((error) => {
                 reject(error);

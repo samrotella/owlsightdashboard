@@ -1,5 +1,6 @@
 <script>
 import { firebaseAuth } from '@/api/firebaseauth.js';
+import { users } from '../store/modules/users.js'
 
 export default {
   name: 'Login',
@@ -7,7 +8,9 @@ export default {
     return {
       username: '',
       password: '',
-      signUp: false
+      domain: '',
+      signUp: false,
+      users
     }
   },
   methods: {
@@ -19,16 +22,16 @@ export default {
     switchToSignIn(){
       this.signUp = false;
     },
-    signUp () {
+    signMeUp() {
       let { auth, createUserWithEmailAndPassword } = firebaseAuth;
       createUserWithEmailAndPassword(auth, this.username, this.password)
         .then((user) => {
           // this.updateUserNameAction(user.user.uid);
-          // var newUserPayload = {
-          //   'username': this.username,
-          //   'userGuid': user.user.uid
-          // }
-          // this.createNewInternalUser(newUserPayload);
+          var newUserPayload = {
+            'domain': this.domain,
+            'userGuid': user.user.uid
+          }
+          this.users.createNewInternalUser(newUserPayload);
           this.username = null;
           this.password = null;
           console.log('new user created')
@@ -38,7 +41,7 @@ export default {
           console.log('error creating new user');
         });
     },
-    signIn () {
+    signIn() {
       let { auth, signInWithEmailAndPassword } = firebaseAuth;
 
       signInWithEmailAndPassword(auth, this.username, this.password).then((userCredential) => {
@@ -92,30 +95,6 @@ export default {
             </template>
           </template>
 
-          <!-- todo first name -->
-          <template class="block">
-            <label for="firstname1">Username</label>
-            <template class="flex pt-1">
-              <input 
-                v-model="username" 
-                class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full" 
-                type="email"
-                placeholder="email@gmail.com">
-            </template>
-          </template>
-
-          <!-- todo last name -->
-          <template class="block">
-            <label for="firstname1">Username</label>
-            <template class="flex pt-1">
-              <input 
-                v-model="username" 
-                class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full" 
-                type="email"
-                placeholder="email@gmail.com">
-            </template>
-          </template>
-
           <template class="block pt-3">
             <label for="lastname1">Password</label>
             <template class="flex pt-1">
@@ -126,31 +105,22 @@ export default {
                 placeholder="Password">
             </template>
           </template>
-          <!-- todo -->
-          <template class="block pt-3">
-            <label for="lastname1">Organization</label>
-            <template class="flex pt-1">
-              <input 
-                v-model="password" 
-                class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full" 
-                type="password"
-                placeholder="Password">
-            </template>
-          </template>
+          
           <!-- todo -->
           <template class="block pt-3">
             <label for="lastname1">Domain</label>
             <template class="flex pt-1">
               <input 
-                v-model="password" 
+                v-model="domain" 
                 class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full" 
-                type="password"
-                placeholder="Password">
+                type="text"
+                placeholder="testing.com">
             </template>
           </template>
 
           <template class="flex justify-content-center p-3">
-            <Button class="" v-on:click="signUp()"  label="Create Account" />
+            <button v-on:click="signMeUp()">Sign Up</button>
+            <!-- <Button class="" v-on:click="signUp()"  label="Create Account" /> -->
           </template>
           <template class="flex justify-content-center p-1">
             <Button v-on:click="switchToSignIn()" label="Have an Account? Sign In" link />

@@ -1,21 +1,9 @@
-const state = () => ({
-    isAuthenticated: false,
-    firebaseUserGuid: null,
-  });
-  
-//   const mutations = {
-//     setUserAuthState (state, boolean) {
-//       state.isAuthenticated = boolean;
-//     },
-//     setFirebaseUserGuid (state, guid) {
-//       state.firebaseUserGuid = guid;
-//     },
-//   };
+import { reactive } from 'vue'
+import Axios from "axios";
 
-  export default {
-    namespaced: true,
-    state,
-    getters,
-    mutations,
-    actions,
-  }
+export const users = reactive({
+    createNewInternalUser(payload) {
+      console.log('userID from users.js: ' + payload.userGuid);
+      console.log('domain from users.js: ' + payload.domain);
+    },
+})

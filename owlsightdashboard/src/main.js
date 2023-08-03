@@ -12,6 +12,7 @@ import DataTable from 'primevue/datatable';
 import Column from 'primevue/column';
 import ColumnGroup from 'primevue/columngroup';
 import Row from 'primevue/row';
+import SelectButton from 'primevue/selectbutton';
 import "primevue/resources/themes/lara-light-indigo/theme.css";
 import "/node_modules/primeflex/primeflex.css";
 
@@ -28,6 +29,7 @@ app.component('DataTable', DataTable);
 app.component('Column', Column);
 app.component('ColumnGroup', ColumnGroup);
 app.component('Row', Row);
+app.component('SelectButton', SelectButton);
 app.use(router)
 app.use(PrimeVue);
 

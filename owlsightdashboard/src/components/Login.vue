@@ -42,13 +42,14 @@ export default {
       let { auth, signInWithEmailAndPassword } = firebaseAuth;
 
       signInWithEmailAndPassword(auth, this.username, this.password).then((userCredential) => {
+        // this is the user ID
         const { uid } = userCredential.user;
         // this.updateUserNameAction(uid);
         // this.setFirebaseUserGuid(uid);
         // this.setUserAuthState(true);
         this.username = null;
         this.password = null;
-        console.log('in');
+        console.log('in: ' + uid);
         this.$router.push('/dashboard')
         // this.$router.push({ name: 'HomeDashboard' });
       }).catch((error) => {

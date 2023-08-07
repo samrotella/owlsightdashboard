@@ -20,7 +20,6 @@
         </div>
     </template> -->
 
-    <h1>{{ users.accountDomain }}</h1>
     <!-- eslint-disable-next-line -->
     <template class="grid pt-3">
         <Card class="col-10 col-offset-1 p-3">
@@ -127,7 +126,7 @@ export default {
         this.totalVisits = this.getTotalVisits();
         this.data.getUniqueCount(this.users.accountDomain);
         this.data.getPageVisitsWithCount(this.users.accountDomain).then(() => {
-            for (let index = 0; index < data.pageVisitCount.length; index++) {
+            for (let index = 0; index < this.data.pageVisitCount.length; index++) {
                 this.pages.push({URLs: data.pageVisitCount[index]._id, visits: data.pageVisitCount[index].count});   
             }
         });

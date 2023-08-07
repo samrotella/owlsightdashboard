@@ -126,7 +126,7 @@ export default {
         }
         this.totalVisits = this.getTotalVisits();
         this.data.getUniqueCount(this.users.accountDomain);
-        this.data.getPageVisitsWithCount().then(() => {
+        this.data.getPageVisitsWithCount(this.users.accountDomain).then(() => {
             for (let index = 0; index < data.pageVisitCount.length; index++) {
                 this.pages.push({URLs: data.pageVisitCount[index]._id, visits: data.pageVisitCount[index].count});   
             }

@@ -31,6 +31,7 @@ export default {
             'domain': this.domain,
             'userGuid': user.user.uid
           }
+          this.users.domain = this.domain;
           this.users.createNewInternalUser(newUserPayload);
           this.username = null;
           this.password = null;
@@ -47,14 +48,20 @@ export default {
       signInWithEmailAndPassword(auth, this.username, this.password).then((userCredential) => {
         // this is the user ID
         const { uid } = userCredential.user;
+
+        //todo
+          // call to get domain data
+          //  
         // this.updateUserNameAction(uid);
         // this.setFirebaseUserGuid(uid);
         // this.setUserAuthState(true);
         this.username = null;
         this.password = null;
         console.log('in: ' + uid);
-        this.$router.push('/dashboard')
-        // this.$router.push({ name: 'HomeDashboard' });
+        
+        this.users.getDomain(uid).then(() => {
+          this.$router.push('/dashboard')
+        });
       }).catch((error) => {
         console.log('error logging in');
         this.loginAttempts++;

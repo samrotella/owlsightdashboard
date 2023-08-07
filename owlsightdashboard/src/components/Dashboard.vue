@@ -20,21 +20,9 @@
         </div>
     </template> -->
 
+    <h1>{{ users.accountDomain }}</h1>
     <!-- eslint-disable-next-line -->
     <template class="grid pt-3">
-        <!-- Total Unique Visits Chart -->
-        <!-- <Card class="col-5 col-offset-1">
-            <template #title> Total Unique Visits </template>
-            
-            <template #subtitle> {{ data.uniqueCount }} </template>
-            <template #content>
-                <div class="card">
-                    <Chart type="line" :data="chartDataUniqueVisit" :options="chartOptionsUniqueVisit" class="h-20rem" />
-                </div>
-            </template>
-        </Card> -->
-        <!-- eslint-disable-next-line -->
-
         <Card class="col-10 col-offset-1 p-3">
             <template #title> Page Visits </template>
             <template #subtitle> Unique Page Visits: {{ data.uniqueCount }} </template>
@@ -81,6 +69,7 @@
 import { firebaseAuth } from '@/api/firebaseauth.js';
 import { getAuth } from "firebase/auth";
 import { data } from '../store/modules/data.js'
+import { users } from '../store/modules/users.js'
 
 export default {
     name: 'Welcome',
@@ -113,26 +102,27 @@ export default {
             sources: null,
             // Update this with the query value from the date picker filter
             chartDataUniqueVisitLabel: [],
-            data
+            data,
+            users
         }
     },
     beforeMount (){
         const auth = getAuth();
         const user = auth.currentUser;
         if (user !== null) {
-        // The user object has basic properties such as display name, email, etc.
-        const displayName = user.displayName;
-        const email = user.email;
-        const photoURL = user.photoURL;
-        const emailVerified = user.emailVerified;
+            // The user object has basic properties such as display name, email, etc.
+            const displayName = user.displayName;
+            const email = user.email;
+            const photoURL = user.photoURL;
+            const emailVerified = user.emailVerified;
 
-        console.log(email);
-        this.theName = email;
+            console.log(email);
+            this.theName = email;
 
-        // The user's ID, unique to the Firebase project. Do NOT use
-        // this value to authenticate with your backend server, if
-        // you have one. Use User.getToken() instead.
-        const uid = user.uid;
+            // The user's ID, unique to the Firebase project. Do NOT use
+            // this value to authenticate with your backend server, if
+            // you have one. Use User.getToken() instead.
+            const uid = user.uid;
         }
         this.totalVisits = this.getTotalVisits();
         this.data.getUniqueCount();

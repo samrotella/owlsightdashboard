@@ -57,11 +57,10 @@ export default {
         // this.setUserAuthState(true);
         this.username = null;
         this.password = null;
-        console.log('in: ' + uid);
         
-        this.users.getDomain(uid).then(() => {
+        // this.users.getDomain(uid).then(() => {
           this.$router.push('/dashboard')
-        });
+        // });
       }).catch((error) => {
         console.log('error logging in');
         this.loginAttempts++;

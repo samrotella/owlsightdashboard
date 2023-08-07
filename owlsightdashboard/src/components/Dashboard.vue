@@ -66,7 +66,7 @@
 
 <script>
 import { firebaseAuth } from '@/api/firebaseauth.js';
-import { getAuth } from "firebase/auth";
+import { getAuth, onAuthStateChanged } from "firebase/auth";
 import { data } from '../store/modules/data.js'
 import { users } from '../store/modules/users.js'
 
@@ -106,30 +106,50 @@ export default {
         }
     },
     beforeMount (){
+        //figure out sign in on refresh
+        
         const auth = getAuth();
-        const user = auth.currentUser;
-        if (user !== null) {
-            // The user object has basic properties such as display name, email, etc.
-            const displayName = user.displayName;
-            const email = user.email;
-            const photoURL = user.photoURL;
-            const emailVerified = user.emailVerified;
-
-            console.log(email);
-            this.theName = email;
-
-            // The user's ID, unique to the Firebase project. Do NOT use
-            // this value to authenticate with your backend server, if
-            // you have one. Use User.getToken() instead.
-            const uid = user.uid;
-        }
-        this.totalVisits = this.getTotalVisits();
-        this.data.getUniqueCount(this.users.accountDomain);
-        this.data.getPageVisitsWithCount(this.users.accountDomain).then(() => {
-            for (let index = 0; index < this.data.pageVisitCount.length; index++) {
-                this.pages.push({URLs: data.pageVisitCount[index]._id, visits: data.pageVisitCount[index].count});   
+        onAuthStateChanged(auth, (user) => {
+            console.log('being hit.');
+            if (user) {
+                console.log('being hit in if user.');
+                // User is signed in, see docs for a list of available properties
+                // https://firebase.google.com/docs/reference/js/auth.user
+                const uid = user.uid;
+                console.log(uid);
+                const email = user.email;
+                this.theName = email;
+                this.users.getDomain(uid).then(() => {
+                    this.data.getUniqueCount(this.users.accountDomain);
+                    this.data.getPageVisitsWithCount(this.users.accountDomain).then(() => {
+                        for (let index = 0; index < this.data.pageVisitCount.length; index++) {
+                            this.pages.push({URLs: data.pageVisitCount[index]._id, visits: data.pageVisitCount[index].count});   
+                        }
+                    });
+                });
+                // ...
+            } else {
+                // User is signed out
+                this.$router.push('/');
             }
         });
+        const user = auth.currentUser;
+        // if (user !== null) {
+        //     console.log('i hit on refresh')
+        //     // The user object has basic properties such as display name, email, etc.
+        //     const displayName = user.displayName;
+        //     const email = user.email;
+        //     const photoURL = user.photoURL;
+        //     const emailVerified = user.emailVerified;
+
+        //     console.log(email);
+        //     this.theName = email;
+
+        //     // The user's ID, unique to the Firebase project. Do NOT use
+        //     // this value to authenticate with your backend server, if
+        //     // you have one. Use User.getToken() instead.
+        //     const uid = user.uid;
+        // }
     },
     mounted() {
         this.chartDataBrowsers = this.setChartDataBrowsers();
@@ -166,9 +186,6 @@ export default {
             }).finally(() => {
                 this.$router.push('/')
             });
-        },
-        getTotalVisits() {
-            return 1;
         },
         setChartDataBrowsers() {
             const documentStyle = getComputedStyle(document.body);

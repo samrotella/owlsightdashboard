@@ -99,8 +99,6 @@ export default {
             dates: null,
             pages: [],
             sources: null,
-            // Update this with the query value from the date picker filter
-            chartDataUniqueVisitLabel: [],
             macOS: null,
             otherOS: null,
             winOS: null,

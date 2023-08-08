@@ -12,14 +12,6 @@
             </template>
         </template>
     </Menubar>
-
-    <!-- Date Range -->
-    <!-- <template class="grid pt-3">
-        <div class="col-offset-1 card flex">
-            <Calendar v-model="dates" selectionMode="range" :manualInput="false" showIcon />
-        </div>
-    </template> -->
-
     <!-- eslint-disable-next-line -->
     <template class="grid pt-3">
         <Card class="col-10 col-offset-1 p-3">

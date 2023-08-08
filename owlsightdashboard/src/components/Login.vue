@@ -14,8 +14,6 @@ export default {
     }
   },
   methods: {
-    // ...mapActions("meeting", ["updateUserNameAction", "getMeetings"]),
-    // ...mapMutations('user', ['setUserAuthState', 'setFirebaseUserGuid']),
     switchToSignUp(){
       this.signUp = true;
     },
@@ -111,7 +109,6 @@ export default {
 
           <template class="flex justify-content-center p-3">
             <button v-on:click="signMeUp()">Sign Up</button>
-            <!-- <Button class="" v-on:click="signUp()"  label="Create Account" /> -->
           </template>
           <template class="flex justify-content-center p-1">
             <Button v-on:click="switchToSignIn()" label="Have an Account? Sign In" link />
@@ -144,7 +141,7 @@ export default {
             </template>
           </template>
           <template class="flex justify-content-center p-3">
-            <Button class="" v-on:click="signIn()"  label="Create Account" />
+            <Button class="" v-on:click="signIn()"  label="Sign In" />
           </template>
           <template class="flex justify-content-center p-1">
             <Button v-on:click="switchToSignUp()" label="New Here? Sign Up!" link />
@@ -152,50 +149,3 @@ export default {
       </template>
   </Card>
 </template>
-
-  <!-- Login -->
-  <!-- <div class="">
-    <input 
-    v-model="username" 
-    class="input" 
-    type="email"
-    placeholder="email@onespot.com">
-    <span class="">
-      <i class=""></i>
-    </span>
-    <input 
-    v-model="password" 
-    class="input" 
-    type="password"
-    placeholder="password">
-    <span class="">
-      <i class=""></i>
-    </span>
-  </div> -->
-
-<!-- End Login -->
-
-<style>
-/* h1 {
-  font-weight: 500;
-  font-size: 2.6rem;
-  position: relative;
-  top: -10px;
-}
-
-h3 {
-  font-size: 1.2rem;
-}
-
-.greetings h1,
-.greetings h3 {
-  text-align: center;
-}
-
-@media (min-width: 1024px) {
-  .greetings h1,
-  .greetings h3 {
-    text-align: left;
-  }
-} */
-</style>

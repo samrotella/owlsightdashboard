@@ -5,7 +5,6 @@
         </template>
         
         <template #end>
-            <!-- todo sign out -->
             <Button v-on:click="signOut()" severity="secondary" label="Signout" text />
             <template class="flex">
                 Welcome, {{ theName }}!

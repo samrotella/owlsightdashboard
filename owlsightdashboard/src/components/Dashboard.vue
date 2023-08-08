@@ -11,6 +11,9 @@
             </template>
         </template>
     </Menubar>
+    <template v-if="this.data.uniqueCount === 0">
+        <SnippetModal></SnippetModal>
+    </template>
     <!-- eslint-disable-next-line -->
     <template class="grid pt-3">
         <Card class="col-10 col-offset-1 p-3">
@@ -60,9 +63,13 @@ import { firebaseAuth } from '@/api/firebaseauth.js';
 import { getAuth, onAuthStateChanged } from "firebase/auth";
 import { data } from '../store/modules/data.js'
 import { users } from '../store/modules/users.js'
+import SnippetModal from './SnippetModal.vue'
 
 export default {
     name: 'Welcome',
+    comments: {
+        SnippetModal
+    },
     data () {
         return {
             theName: null,

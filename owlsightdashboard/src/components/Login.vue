@@ -26,7 +26,6 @@ export default {
       let { auth, createUserWithEmailAndPassword } = firebaseAuth;
       createUserWithEmailAndPassword(auth, this.username, this.password)
         .then((user) => {
-          // this.updateUserNameAction(user.user.uid);
           var newUserPayload = {
             'domain': this.domain,
             'userGuid': user.user.uid
@@ -46,25 +45,13 @@ export default {
       let { auth, signInWithEmailAndPassword } = firebaseAuth;
 
       signInWithEmailAndPassword(auth, this.username, this.password).then((userCredential) => {
-        // this is the user ID
         const { uid } = userCredential.user;
-
-        //todo
-          // call to get domain data
-          //  
-        // this.updateUserNameAction(uid);
-        // this.setFirebaseUserGuid(uid);
-        // this.setUserAuthState(true);
         this.username = null;
         this.password = null;
         
-        // this.users.getDomain(uid).then(() => {
-          this.$router.push('/dashboard')
-        // });
+        this.$router.push('/dashboard')
       }).catch((error) => {
         console.log('error logging in');
-        this.loginAttempts++;
-        this.loginErrors = error.message;
       });
     },
     resetPasswordEmail () {
@@ -73,11 +60,9 @@ export default {
       sendPasswordResetEmail(auth, this.username)
         .then(() => {
             this.passwordSent = true;
-            this.loginErrors = null;
         })
         .catch((error) => {
             var errorMessage = error.message;
-            this.loginErrors = errorMessage;
         });
     },
   }

@@ -15,7 +15,8 @@ import Row from 'primevue/row';
 import SelectButton from 'primevue/selectbutton';
 import Dialog from 'primevue/dialog';
 import SnippetModal from '../src/components/SnippetModal.vue'
-import "primevue/resources/themes/lara-light-indigo/theme.css";
+import Tooltip from 'primevue/tooltip';
+import "primevue/resources/themes/vela-green/theme.css";
 import "/node_modules/primeflex/primeflex.css";
 
 
@@ -34,6 +35,7 @@ app.component('Row', Row);
 app.component('SelectButton', SelectButton);
 app.component('SnippetModal', SnippetModal);
 app.component('Dialog', Dialog);
+app.directive('tooltip', Tooltip);
 app.use(router)
 app.use(PrimeVue);
 

@@ -1,3 +1,10 @@
+<!-- Menu -->
+<!-- Overall PG Visit Numbers -->
+<!-- Conv or Rev -->
+<!-- Page Visits -->
+<!-- Conv/Rev -->
+<!-- Sources/Lang/OS/Etc. -->
+
 <template class="">
     <Menubar>
         <template #start>
@@ -14,11 +21,55 @@
     <template v-if="this.data.uniqueCount === 0">
         <SnippetModal></SnippetModal>
     </template>
+    <!-- Top Level Metrics -->
+    <!-- End Top Level Metrics -->
+    <template class="grid pt-3">
+        <Card class="col-2 col-offset-1 p-3">
+            <template #subtitle> Unique Page Visits </template>
+            <template #content>
+                <div class="card justify-content-center">
+                    <h2>{{ data.uniqueCount }}</h2>
+                </div>
+            </template>
+        </Card>
+        <Card class="col-2 col-offset-0 p-3">
+            <template #subtitle> Total Page Visits </template>
+            <template #content>
+                <div class="card justify-content-center">
+                    <h2>{{ data.uniqueCount }}</h2>
+                </div>
+            </template>
+        </Card>
+        <Card v-tooltip.top="'Visitors who left after viewing a single page'" class="col-2 col-offset-0 p-3">
+            <template #subtitle> Bounce Rate </template>
+            <template #content>
+                <div class="card justify-content-center">
+                    <h2>{{ data.uniqueCount }}%</h2>
+                </div>
+            </template>
+        </Card>
+        <Card class="col-2 col-offset-0 p-3">
+            <template #subtitle> Total Conversions </template>
+            <template #content>
+                <div class="card justify-content-center">
+                    <h2>{{ data.uniqueCount }}</h2>
+                </div>
+            </template>
+        </Card>
+        <Card class="col-2 col-offset-0 p-3">
+            <template #subtitle> Avg Session Time </template>
+            <template #content>
+                <div class="card justify-content-center">
+                    <h2>{{ data.uniqueCount }}</h2>
+                </div>
+            </template>
+        </Card>
+    </template>
+
     <!-- eslint-disable-next-line -->
     <template class="grid pt-3">
         <Card class="col-10 col-offset-1 p-3">
-            <template #title> Page Visits </template>
-            <template #subtitle> Unique Page Visits: {{ data.uniqueCount }} </template>
+            <template #title> Total Page Visits </template>
             <template #content>
                 <div class="card">
                     <DataTable :value="pages" tableStyle="min-width: 20rem">

@@ -53,10 +53,10 @@
 
         <!-- eslint-disable-next-line -->
         <Card class="col-5 col-offset-0">
-            <template #title> Browsers </template>
+            <template #title> Operating Systems </template>
             <template #content>
                 <div class="card flex justify-content-center">
-                    <Chart type="pie" :data="chartDataBrowsers" :options="chartOptionsBrowsers" class="w-full md:w-30rem" />
+                    <Chart type="pie" :data="chartDataOperatingSystems" :options="chartOptionsBrowsers" class="w-full md:w-30rem" />
                 </div>
             </template>
         </Card>
@@ -75,7 +75,7 @@ export default {
     data () {
         return {
             theName: null,
-            chartDataBrowsers: null,
+            chartDataOperatingSystems: null,
             totalVisits: null,
             chartOptionsBrowsers: {
                 plugins: {
@@ -101,6 +101,9 @@ export default {
             sources: null,
             // Update this with the query value from the date picker filter
             chartDataUniqueVisitLabel: [],
+            macOS: null,
+            otherOS: null,
+            winOS: null,
             data,
             users
         }
@@ -121,6 +124,22 @@ export default {
                 this.theName = email;
                 this.users.getDomain(uid).then(() => {
                     this.data.getUniqueCount(this.users.accountDomain);
+
+                    // OS Data - Bruuuutally slow but it works...
+                    this.data.getOS(this.users.accountDomain, 'MacIntel').then((macData) => {
+                        this.macOS = macData;
+                        }).then(() => {
+                            this.data.getOS(this.users.accountDomain, 'Win32').then((windowData) => {
+                                this.winOS = windowData;
+                                    this.data.getOS(this.users.accountDomain, 'other').then((otherData) => {
+                                        this.otherOS = otherData;
+                                            }).then(() => {
+                                                this.chartDataOperatingSystems = this.setChartDataOperatingSystems();
+                                            });
+                            })
+                        });
+                    // End OS Nightmare
+
                     this.data.getPageVisitsWithCount(this.users.accountDomain).then(() => {
                         for (let index = 0; index < this.data.pageVisitCount.length; index++) {
                             this.pages.push({URLs: data.pageVisitCount[index]._id, visits: data.pageVisitCount[index].count});   
@@ -134,26 +153,9 @@ export default {
             }
         });
         const user = auth.currentUser;
-        // if (user !== null) {
-        //     console.log('i hit on refresh')
-        //     // The user object has basic properties such as display name, email, etc.
-        //     const displayName = user.displayName;
-        //     const email = user.email;
-        //     const photoURL = user.photoURL;
-        //     const emailVerified = user.emailVerified;
-
-        //     console.log(email);
-        //     this.theName = email;
-
-        //     // The user's ID, unique to the Firebase project. Do NOT use
-        //     // this value to authenticate with your backend server, if
-        //     // you have one. Use User.getToken() instead.
-        //     const uid = user.uid;
-        // }
     },
     mounted() {
-        this.chartDataBrowsers = this.setChartDataBrowsers();
-        this.sources = [{URLs: 'www.google.com', leads: 100}, 
+        this.sources = [{URLs: 'direct', leads: 100}, 
                         {URLs: 'www.linkedin.com', leads: 15},
                         {URLs: 'www.reddit.com', leads: 153},
                         {URLs: 'www.yahoo.com', leads: 125}];
@@ -187,39 +189,20 @@ export default {
                 this.$router.push('/')
             });
         },
-        setChartDataBrowsers() {
+        setChartDataOperatingSystems() {
             const documentStyle = getComputedStyle(document.body);
-
             return {
-                labels: ['Chrome', 'Safari', 'Firefox', 'Other'],
+                labels: ['Mac', 'Windows', 'Other'],
                 datasets: [
                     {
-                        data: [540, 325, 702, 34],
-                        backgroundColor: [documentStyle.getPropertyValue('--blue-500'), documentStyle.getPropertyValue('--yellow-500'), documentStyle.getPropertyValue('--green-500'), documentStyle.getPropertyValue('--red-500')],
-                        hoverBackgroundColor: [documentStyle.getPropertyValue('--blue-400'), documentStyle.getPropertyValue('--yellow-400'), documentStyle.getPropertyValue('--green-400'), documentStyle.getPropertyValue('--red-500')]
+                        data: [this.macOS, this.winOS, this.otherOS],
+                        backgroundColor: [documentStyle.getPropertyValue('--blue-500'), documentStyle.getPropertyValue('--green-500'), documentStyle.getPropertyValue('--red-500')],
+                        hoverBackgroundColor: [documentStyle.getPropertyValue('--blue-400'), documentStyle.getPropertyValue('--green-400'), documentStyle.getPropertyValue('--red-500')]
                     }
                 ]
             };
+            
         },
-        LastDays () {
-            for (var i=0; i<7; i++) {
-                var d = new Date();
-                d.setDate(d.getDate() - i);
-                let x = this.formatDate(d);
-                this.chartDataUniqueVisitLabel.push({_id: x, size: null})
-            }
-            return(this.chartDataUniqueVisitLabel);
-        },
-        formatDate(date){
-            var dd = date.getDate();
-            var mm = date.getMonth()+1;
-            var yyyy = date.getFullYear();
-            if(dd<10) {dd='0'+dd}
-            if(mm<10) {mm='0'+mm}
-            date = mm+'-'+dd+'-'+yyyy;
-            let stringDate = date.toString();
-            return stringDate;
-        }
     },
 }
 </script>

@@ -17,6 +17,7 @@ import Dialog from 'primevue/dialog';
 import SnippetModal from '../src/components/SnippetModal.vue'
 import Tooltip from 'primevue/tooltip';
 import SpeedDial from 'primevue/speeddial';
+import Sidebar from 'primevue/sidebar';
 import "primevue/resources/themes/vela-blue/theme.css";
 import "/node_modules/primeflex/primeflex.css";
 
@@ -37,6 +38,7 @@ app.component('SelectButton', SelectButton);
 app.component('SnippetModal', SnippetModal);
 app.component('Dialog', Dialog);
 app.component('SpeedDial', SpeedDial);
+app.component('Sidebar', Sidebar);
 app.directive('tooltip', Tooltip);
 app.use(router)
 app.use(PrimeVue);

@@ -5,22 +5,33 @@
 <!-- Conv/Rev -->
 <!-- Sources/Lang/OS/Etc. -->
 
-<template class="">
-    <Menubar>
+<template>
+    <Menubar class="col-10 col-offset-1" style="border-style: none; background-color: #121212 ">
         <template #start>
-            <!-- <img alt="logo" src="../assets/Owlsight.png" height="75" class="mr-2" /> -->
             <template class="flex">
-                Welcome, {{ theName }}!
+                <img alt="logo" src="../assets/Owlsight.png" height="75" class="mr-2" />
             </template>
         </template>
-        
         <template #end>
-            <Button v-on:click="signOut()" severity="secondary" label="Signout" text />
-            <!-- <template class="flex">
-                Welcome, {{ theName }}!
-            </template> -->
+            <!-- <Button  severity="secondary" label="Signout, " text />
+             -->
+             <a v-on:click="signOut()">
+                Logout - 
+                {{ theName }}
+             </a>
+
         </template>
     </Menubar>
+    <!-- <template> -->
+        <!-- <div class="card flex justify-content-center">
+            
+            <Sidebar v-model:visible="visible">
+                <h2>Sidebar</h2>
+                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+            </Sidebar>
+            <Button icon="pi pi-arrow-right" @click="visible = true" />
+        </div> -->
+    <!-- </template> -->
     <!-- <template class="grid">
         <div class="card col-1 col-offset-11">
             <div class="flex align-items-end justify-content-center" :style="{ position: 'relative', height: '100px' }">
@@ -135,6 +146,7 @@ export default {
     data () {
         return {
             theName: null,
+            visible: false,
             chartDataOperatingSystems: null,
             totalVisits: null,
             chartOptionsBrowsers: {
@@ -264,3 +276,19 @@ export default {
     },
 }
 </script>
+
+<!-- <style scoped>
+:deep(.p-menubar) {
+    border-color: red;
+    color: #dc1a1a;
+    background: #000;
+}
+</style> -->
+
+<!-- <style scoped>
+:deep(.p-menubar .p-menuitem-content	){
+    border-color: red;
+    color: #dc1a1a;
+    background: red;
+}
+</style> -->

@@ -9,17 +9,11 @@
     <Menubar class="col-10 col-offset-1" style="border-style: none; background-color: #121212 ">
         <template #start>
             <template class="flex">
-                <img alt="logo" src="../assets/Owlsight.png" height="75" class="mr-2" />
+                <img alt="logo" src="../assets/OwlSight.svg" height="175" class="" />
             </template>
         </template>
         <template #end>
-            <!-- <Button  severity="secondary" label="Signout, " text />
-             -->
-             <a v-on:click="signOut()">
-                Logout - 
-                {{ theName }}
-             </a>
-
+            <Button v-on:click="signOut()" severity="secondary" label=" Logout" text />
         </template>
     </Menubar>
     <!-- <template> -->
@@ -45,88 +39,103 @@
     </template>
     <!-- Top Level Metrics -->
     <!-- End Top Level Metrics -->
-    <template class="grid pt-3">
-        <Card class="col-2 col-offset-1 p-3">
-            <template #subtitle> Unique Page Visits </template>
-            <template #content>
-                <div class="card justify-content-center">
-                    <h2>{{ data.uniqueCount }}</h2>
-                </div>
-            </template>
-        </Card>
-        <Card class="col-2 col-offset-0 p-3">
-            <template #subtitle> Total Page Visits </template>
-            <template #content>
-                <div class="card justify-content-center">
-                    <h2>{{ data.uniqueCount }}</h2>
-                </div>
-            </template>
-        </Card>
-        <Card v-tooltip.top="'Visitors who left after viewing a single page'" class="col-2 col-offset-0 p-3">
-            <template #subtitle> Bounce Rate </template>
-            <template #content>
-                <div class="card justify-content-center">
-                    <h2>{{ data.uniqueCount }}%</h2>
-                </div>
-            </template>
-        </Card>
-        <Card class="col-2 col-offset-0 p-3">
-            <template #subtitle> Total Conversions </template>
-            <template #content>
-                <div class="card justify-content-center">
-                    <h2>{{ data.uniqueCount }}</h2>
-                </div>
-            </template>
-        </Card>
-        <Card class="col-2 col-offset-0 p-3">
-            <template #subtitle> Avg Session Time </template>
-            <template #content>
-                <div class="card justify-content-center">
-                    <h2>{{ data.uniqueCount }}</h2>
-                </div>
-            </template>
-        </Card>
+    <template class="grid">
+        <div class="col-2 col-offset-1">
+            <Card>
+                <template #subtitle> Unique Page Visits </template>
+                <template #content>
+                    <div class="card justify-content-center">
+                        <h2>{{ data.uniqueCount }}</h2>
+                    </div>
+                </template>
+            </Card>
+        </div>
+        <div class="col-2 col-offset-0">
+            <Card>
+                <template #subtitle> Total Page Visits </template>
+                <template #content>
+                    <div class="card justify-content-center">
+                        <h2>{{ data.uniqueCount }}</h2>
+                    </div>
+                </template>
+            </Card>
+        </div>
+        <div class="col-2 col-offset-0">
+            <Card>
+                <template #subtitle> Bounce Rate </template>
+                <template #content>
+                    <div class="card justify-content-center">
+                        <h2>{{ data.uniqueCount }}</h2>
+                    </div>
+                </template>
+            </Card>
+        </div>
+        <div class="col-2 col-offset-0">
+            <Card>
+                <template #subtitle> Total Conversions </template>
+                <template #content>
+                    <div class="card justify-content-center">
+                        <h2>{{ data.uniqueCount }}</h2>
+                    </div>
+                </template>
+            </Card>
+        </div>
+        <div class="col-2 col-offset-0">
+            <Card>
+                <template #subtitle> Average Session </template>
+                <template #content>
+                    <div class="card justify-content-center">
+                        <h2>{{ data.uniqueCount }}</h2>
+                    </div>
+                </template>
+            </Card>
+        </div>
     </template>
 
     <!-- eslint-disable-next-line -->
     <template class="grid pt-3">
-        <Card class="col-10 col-offset-1 p-3">
-            <template #title> Total Page Visits </template>
-            <template #content>
-                <div class="card">
-                    <DataTable :value="pages" tableStyle="min-width: 20rem">
-                        <Column field="URLs" header="Pages"></Column>
-                        <Column field="visits" header="Total Visits"></Column>
-                    </DataTable>
-                </div>
-            </template>
-        </Card>
+        <div class="col-10 col-offset-1">
+            <Card>
+                <template #title> Total Page Visits </template>
+                <template #content>
+                    <div class="card">
+                        <DataTable :value="pages" tableStyle="min-width: 20rem">
+                            <Column field="URLs" header="Pages"></Column>
+                            <Column field="visits" header="Total Visits"></Column>
+                        </DataTable>
+                    </div>
+                </template>
+            </Card>
+        </div>
     </template>
 
     <!-- eslint-disable-next-line -->
-    <template class="grid pt-4">
+    <template class="grid pt-3">
             <!-- eslint-disable-next-line -->
-        <Card class="col-5 col-offset-1 p-3">
-            <template #title> Sources </template>
-            <template #content>
-                <div class="card">
-                    <DataTable :value="sources" tableStyle="min-width: 20rem">
-                        <Column field="URLs" header="Pages"></Column>
-                        <Column field="leads" header="Total Leads"></Column>
-                    </DataTable>
-                </div>
-            </template>
-        </Card>
-
-        <!-- eslint-disable-next-line -->
-        <Card class="col-5 col-offset-0">
-            <template #title> Operating Systems </template>
-            <template #content>
-                <div class="card flex justify-content-center">
-                    <Chart type="pie" :data="chartDataOperatingSystems" :options="chartOptionsBrowsers" class="w-full md:w-30rem" />
-                </div>
-            </template>
-        </Card>
+        <div class="col-5 col-offset-1">
+            <Card>
+                <template #title> Sources </template>
+                <template #content>
+                    <div class="card">
+                        <DataTable :value="sources" tableStyle="min-width: 20rem">
+                            <Column field="URLs" header="Pages"></Column>
+                            <Column field="leads" header="Total Leads"></Column>
+                        </DataTable>
+                    </div>
+                </template>
+            </Card>
+        </div>
+        
+        <div class="col-5 col-offset-0">
+            <Card>
+                <template #title> Operating Systems </template>
+                <template #content>
+                    <div class="card flex justify-content-center">
+                        <Chart type="pie" :data="chartDataOperatingSystems" :options="chartOptionsBrowsers" class="w-full md:w-30rem" />
+                    </div>
+                </template>
+            </Card>
+        </div>
     </template>
    
 </template>

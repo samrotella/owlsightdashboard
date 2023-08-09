@@ -8,16 +8,27 @@
 <template class="">
     <Menubar>
         <template #start>
-            <img alt="logo" src="../assets/Owlsight.png" height="75" class="mr-2" />
-        </template>
-        
-        <template #end>
-            <Button v-on:click="signOut()" severity="secondary" label="Signout" text />
+            <!-- <img alt="logo" src="../assets/Owlsight.png" height="75" class="mr-2" /> -->
             <template class="flex">
                 Welcome, {{ theName }}!
             </template>
         </template>
+        
+        <template #end>
+            <Button v-on:click="signOut()" severity="secondary" label="Signout" text />
+            <!-- <template class="flex">
+                Welcome, {{ theName }}!
+            </template> -->
+        </template>
     </Menubar>
+    <!-- <template class="grid">
+        <div class="card col-1 col-offset-11">
+            <div class="flex align-items-end justify-content-center" :style="{ position: 'relative', height: '100px' }">
+                <Toast />
+                <SpeedDial :model="items" direction="down" :transitionDelay="80" showIcon="pi pi-bars" hideIcon="pi pi-times" buttonClass="p-button-outlined" />
+            </div>
+        </div>
+    </template> -->
     <template v-if="this.data.uniqueCount === 0">
         <SnippetModal></SnippetModal>
     </template>

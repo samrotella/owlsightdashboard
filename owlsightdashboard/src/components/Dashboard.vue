@@ -16,31 +16,13 @@
             <Button v-on:click="signOut()" severity="secondary" label=" Logout" text />
         </template>
     </Menubar>
-    <!-- <template> -->
-        <!-- <div class="card flex justify-content-center">
-            
-            <Sidebar v-model:visible="visible">
-                <h2>Sidebar</h2>
-                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
-            </Sidebar>
-            <Button icon="pi pi-arrow-right" @click="visible = true" />
-        </div> -->
-    <!-- </template> -->
-    <!-- <template class="grid">
-        <div class="card col-1 col-offset-11">
-            <div class="flex align-items-end justify-content-center" :style="{ position: 'relative', height: '100px' }">
-                <Toast />
-                <SpeedDial :model="items" direction="down" :transitionDelay="80" showIcon="pi pi-bars" hideIcon="pi pi-times" buttonClass="p-button-outlined" />
-            </div>
-        </div>
-    </template> -->
+
     <template v-if="this.data.uniqueCount === 0">
         <SnippetModal></SnippetModal>
     </template>
-    <!-- Top Level Metrics -->
-    <!-- End Top Level Metrics -->
+
     <template class="grid">
-        <div class="col-2 col-offset-1">
+        <div class="col-3 col-offset-1">
             <Card>
                 <template #subtitle> Unique Page Visits </template>
                 <template #content>
@@ -50,27 +32,8 @@
                 </template>
             </Card>
         </div>
-        <div class="col-2 col-offset-0">
-            <Card>
-                <template #subtitle> Total Page Visits </template>
-                <template #content>
-                    <div class="card justify-content-center">
-                        <h2>{{ totalPageCount }}</h2>
-                    </div>
-                </template>
-            </Card>
-        </div>
-        <div class="col-2 col-offset-0">
-            <Card>
-                <template #subtitle> Bounce Rate </template>
-                <template #content>
-                    <div class="card justify-content-center">
-                        <h2>{{ data.uniqueCount }}</h2>
-                    </div>
-                </template>
-            </Card>
-        </div>
-        <div class="col-2 col-offset-0">
+        
+        <div class="col-4 col-offset-0">
             <Card>
                 <template #subtitle> Total Conversions </template>
                 <template #content>
@@ -80,7 +43,17 @@
                 </template>
             </Card>
         </div>
-        <div class="col-2 col-offset-0">
+        <div class="col-3 col-offset-0">
+            <Card>
+                <template #subtitle> Total Page Visits </template>
+                <template #content>
+                    <div class="card justify-content-center">
+                        <h2>{{ totalPageCount }}</h2>
+                    </div>
+                </template>
+            </Card>
+        </div>
+        <!-- <div class="col-2 col-offset-0">
             <Card>
                 <template #subtitle> Average Session </template>
                 <template #content>
@@ -89,7 +62,7 @@
                     </div>
                 </template>
             </Card>
-        </div>
+        </div> -->
     </template>
 
     <!-- eslint-disable-next-line -->

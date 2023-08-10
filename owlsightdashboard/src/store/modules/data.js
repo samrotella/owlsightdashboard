@@ -2,7 +2,7 @@ import { reactive } from 'vue'
 import Axios from "axios";
 
 export const data = reactive({
-    uniqueCount: null,
+    uniqueCount: 0,
     pageVisitCount: [],
     result: [],
     getUniqueCount(domain) {

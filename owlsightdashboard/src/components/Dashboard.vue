@@ -14,10 +14,14 @@
         </template>
         <template #end>
             <Button v-on:click="signOut()" severity="secondary" label=" Logout" text />
+            <Button v-on:click="setSnippetModalVis()" icon="pi pi-cog" />
         </template>
     </Menubar>
 
-    <template v-if="this.data.uniqueCount === 0">
+    <!-- <template v-if="this.data.uniqueCount === 0">
+        <SnippetModal></SnippetModal>
+    </template> -->
+    <template v-if="this.snippetModalVisible === true">
         <SnippetModal></SnippetModal>
     </template>
 
@@ -157,6 +161,7 @@ export default {
             macOS: null,
             otherOS: null,
             winOS: null,
+            snippetModalVisible: false,
             data,
             users
         }
@@ -257,6 +262,9 @@ export default {
             };
             
         },
+        setSnippetModalVis () {
+            this.snippetModalVisible = true;
+        }
     },
 }
 </script>

@@ -20,6 +20,7 @@ import SpeedDial from 'primevue/speeddial';
 import Sidebar from 'primevue/sidebar';
 import "primevue/resources/themes/vela-blue/theme.css";
 import "/node_modules/primeflex/primeflex.css";
+import 'primeicons/primeicons.css';
 
 
 const app = createApp(App)

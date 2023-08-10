@@ -55,7 +55,7 @@
                 <template #subtitle> Total Page Visits </template>
                 <template #content>
                     <div class="card justify-content-center">
-                        <h2>{{ data.uniqueCount }}</h2>
+                        <h2>{{ totalPageCount }}</h2>
                     </div>
                 </template>
             </Card>
@@ -179,6 +179,7 @@ export default {
             },
             dates: null,
             pages: [],
+            totalPageCount: 0,
             sources: null,
             macOS: null,
             otherOS: null,
@@ -221,7 +222,8 @@ export default {
 
                     this.data.getPageVisitsWithCount(this.users.accountDomain).then(() => {
                         for (let index = 0; index < this.data.pageVisitCount.length; index++) {
-                            this.pages.push({URLs: data.pageVisitCount[index]._id, visits: data.pageVisitCount[index].count});   
+                            this.pages.push({URLs: data.pageVisitCount[index]._id, visits: data.pageVisitCount[index].count});
+                            this.totalPageCount += data.pageVisitCount[index].count;
                         }
                     });
                 });

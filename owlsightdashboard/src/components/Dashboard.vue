@@ -287,19 +287,3 @@ export default {
     },
 }
 </script>
-
-<!-- <style scoped>
-:deep(.p-menubar) {
-    border-color: red;
-    color: #dc1a1a;
-    background: #000;
-}
-</style> -->
-
-<!-- <style scoped>
-:deep(.p-menubar .p-menuitem-content	){
-    border-color: red;
-    color: #dc1a1a;
-    background: red;
-}
-</style> -->

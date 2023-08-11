@@ -6,6 +6,7 @@ import Button from "primevue/button";
 import Card from "primevue/card"
 import Menubar from 'primevue/menubar';
 import InputText from 'primevue/inputtext';
+import Textarea from 'primevue/textarea';
 import Chart from 'primevue/chart';
 import Calendar from 'primevue/calendar';
 import DataTable from 'primevue/datatable';
@@ -17,6 +18,7 @@ import Dialog from 'primevue/dialog';
 import SnippetModal from '../src/components/SnippetModal.vue'
 import Tooltip from 'primevue/tooltip';
 import SpeedDial from 'primevue/speeddial';
+import Panel from 'primevue/panel';
 import Sidebar from 'primevue/sidebar';
 import "primevue/resources/themes/vela-blue/theme.css";
 import "/node_modules/primeflex/primeflex.css";
@@ -39,6 +41,8 @@ app.component('SelectButton', SelectButton);
 app.component('SnippetModal', SnippetModal);
 app.component('Dialog', Dialog);
 app.component('SpeedDial', SpeedDial);
+app.component('Textarea', Textarea);
+app.component('Panel', Panel);
 app.component('Sidebar', Sidebar);
 app.directive('tooltip', Tooltip);
 app.use(router)

@@ -10,6 +10,7 @@ export default {
       password: '',
       domain: '',
       signUp: false,
+      scriptTextInput: '',
       users
     }
   },
@@ -63,6 +64,9 @@ export default {
             var errorMessage = error.message;
         });
     },
+    copyScript () {
+      navigator.clipboard.writeText('<script>src="https://owlsight.onrender.com/main.js"' + '<' + '/script>');
+    }
   }
 }
 </script>
@@ -108,6 +112,20 @@ export default {
           </template>
 
           <template class="flex justify-content-center p-3">
+            <div class="card flex justify-content-center">
+              <!-- <Textarea value="<script></script>" rows="3" cols="60" /> -->
+                <Panel header="Copy the script tag and insert at the bottom of your body tag">
+                    <p>
+                      <code>
+                        &lt;script>src="https://owlsight.onrender.com/main.js"&lt;/script>
+                      </code>
+                    </p>
+                    <p><Button label="Copy to clipboard" class="" plain text v-on:click="copyScript()" icon="pi pi-copy" /></p>
+                </Panel>
+            </div>
+          </template>
+
+          <template class="flex justify-content-center p-3">
             <button v-on:click="signMeUp()">Sign Up</button>
           </template>
           <template class="flex justify-content-center p-1">
@@ -149,3 +167,22 @@ export default {
       </template>
   </Card>
 </template>
+<style>
+code { 
+  background: #474749;
+  color: rgb(178, 226, 215);
+  word-wrap: break-word;
+  box-decoration-break: clone;
+  /* padding: .1rem .3rem .2rem; */
+  border-radius: .2rem;
+}
+</style>
+
+<!-- function copyToClipboard () {
+  var copyText = document.getElementById('oneGuid');
+  copyText.select();
+  copyText.setSelectionRange(0, 99999)
+  navigator.clipboard.writeText(copyText.value)
+      .then(() => { alert('Copied!') })
+      .catch((error) => { alert('Copy failed!') })
+} -->

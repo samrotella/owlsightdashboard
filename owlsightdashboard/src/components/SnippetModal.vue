@@ -3,7 +3,7 @@
     <div class="card flex justify-content-center">
         <!-- <Button label="Show" icon="pi pi-external-link" @click="visible = true" /> -->
         <!-- eslint-disable-next-line -->
-        <Dialog v-model:visible="visible" header="Insrt script tag at the bottom of your website's body tag" :style="{ width: '50vw' }">
+        <Dialog v-model:visible="visible" header="Insert script tag at the bottom of your website's body tag" :style="{ width: '50vw' }">
             <!-- <Panel header="Copy the script tag and insert at the bottom of your body tag"> -->
                 <h3></h3>
                     <p>

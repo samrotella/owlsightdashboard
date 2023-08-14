@@ -18,11 +18,14 @@
         </template>
     </Menubar>
 
-    <!-- <template v-if="this.data.uniqueCount === 0">
-        <SnippetModal></SnippetModal>
-    </template> -->
     <template v-if="this.snippetModalVisible === true">
         <SnippetModal></SnippetModal>
+    </template>
+
+    <template class="grid pb-2 pr-6">
+        <div class="col-offset-9">
+            <Calendar disabled v-model="inputDate" selectionMode="range" dateFormat="mm/dd/y" :manualInput="false" showIcon />
+        </div>
     </template>
 
     <template class="grid">
@@ -123,6 +126,8 @@ import { getAuth, onAuthStateChanged } from "firebase/auth";
 import { data } from '../store/modules/data.js'
 import { users } from '../store/modules/users.js'
 import SnippetModal from './SnippetModal.vue'
+const date7 = new Date();
+date7.setDate(date7.getDate() - 7);
 
 export default {
     name: 'Welcome',
@@ -154,7 +159,7 @@ export default {
                     },
                 }
             },
-            dates: null,
+            inputDate: [date7, new Date()],
             pages: [],
             totalPageCount: 0,
             sources: null,

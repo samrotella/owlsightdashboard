@@ -45,7 +45,7 @@
                 <template #subtitle> Total Conversions </template>
                 <template #content>
                     <div class="card justify-content-center">
-                        <h2>{{ data.uniqueCount }}</h2>
+                        <h2>{{ data.convCount }}</h2>
                     </div>
                 </template>
             </Card>
@@ -187,6 +187,7 @@ export default {
                 this.theName = email;
                 this.users.getDomain(uid).then(() => {
                     this.data.getUniqueCount(this.users.accountDomain);
+                    this.data.getConv(this.users.accountDomain);
 
                     // OS Data - Bruuuutally slow but it works...
                     this.data.getOS(this.users.accountDomain, 'MacIntel').then((macData) => {

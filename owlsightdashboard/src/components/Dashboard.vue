@@ -166,6 +166,7 @@ export default {
             macOS: null,
             otherOS: null,
             winOS: null,
+            iphoneOS: null,
             snippetModalVisible: false,
             data,
             users
@@ -195,11 +196,15 @@ export default {
                         }).then(() => {
                             this.data.getOS(this.users.accountDomain, 'Win32').then((windowData) => {
                                 this.winOS = windowData;
-                                    this.data.getOS(this.users.accountDomain, 'other').then((otherData) => {
-                                        this.otherOS = otherData;
-                                            }).then(() => {
-                                                this.chartDataOperatingSystems = this.setChartDataOperatingSystems();
-                                            });
+                                this.data.getOS(this.users.accountDomain, 'iPhone').then((iphoneDate) => {
+                                    this.iphoneOS = iphoneDate;
+                                        this.data.getOS(this.users.accountDomain, 'other').then((otherData) => {
+                                            this.otherOS = otherData;
+                                                }).then(() => {
+                                                    this.chartDataOperatingSystems = this.setChartDataOperatingSystems();
+                                                });
+                                })
+                                
                             })
                         });
                     // End OS Nightmare
@@ -257,12 +262,12 @@ export default {
         setChartDataOperatingSystems() {
             const documentStyle = getComputedStyle(document.body);
             return {
-                labels: ['Mac', 'Windows', 'Other'],
+                labels: ['Mac', 'Windows', 'iOS', 'Other'],
                 datasets: [
                     {
-                        data: [this.macOS, this.winOS, this.otherOS],
-                        backgroundColor: [documentStyle.getPropertyValue('--blue-500'), documentStyle.getPropertyValue('--green-500'), documentStyle.getPropertyValue('--red-500')],
-                        hoverBackgroundColor: [documentStyle.getPropertyValue('--blue-400'), documentStyle.getPropertyValue('--green-400'), documentStyle.getPropertyValue('--red-500')]
+                        data: [this.macOS, this.winOS, this.iphoneOS, this.otherOS],
+                        backgroundColor: [documentStyle.getPropertyValue('--blue-500'), documentStyle.getPropertyValue('--green-500'), documentStyle.getPropertyValue('--yellow-500'), documentStyle.getPropertyValue('--red-500')],
+                        hoverBackgroundColor: [documentStyle.getPropertyValue('--blue-400'), documentStyle.getPropertyValue('--green-400'), documentStyle.getPropertyValue('--yellow-400'),  documentStyle.getPropertyValue('--red-500')]
                     }
                 ]
             };

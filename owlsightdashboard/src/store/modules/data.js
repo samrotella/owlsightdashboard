@@ -54,8 +54,8 @@ export const data = reactive({
     },
     getSourcesWithCount(domain) {
         return new Promise((resolve, reject) => {
-            Axios.get(`http://localhost:3000/sourcesWithCounts/domain/${domain}`).then((response) => {
-            // Axios.get(`https://owlsight-api.onrender.com/sourcesWithCounts/domain/${domain}`).then((response) => {
+            // Axios.get(`http://localhost:3000/sourcesWithCounts/domain/${domain}`).then((response) => {
+            Axios.get(`https://owlsight-api.onrender.com/sourcesWithCounts/domain/${domain}`).then((response) => {
                 for (let index = 0; index < response.data.length; index++) {
                     this.sourceVisitCount.push(response.data[index]);
                 }

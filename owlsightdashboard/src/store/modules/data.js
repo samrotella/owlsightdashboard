@@ -4,6 +4,7 @@ import Axios from "axios";
 export const data = reactive({
     uniqueCount: 0,
     pageVisitCount: [],
+    sourceVisitCount: [],
     result: [],
     convCount: 0,
     getUniqueCount(domain) {
@@ -50,5 +51,18 @@ export const data = reactive({
                     reject(error);
                 });
         });
-    }
+    },
+    getSourcesWithCount(domain) {
+        return new Promise((resolve, reject) => {
+            Axios.get(`http://localhost:3000/sourcesWithCounts/domain/${domain}`).then((response) => {
+            // Axios.get(`https://owlsight-api.onrender.com/sourcesWithCounts/domain/${domain}`).then((response) => {
+                for (let index = 0; index < response.data.length; index++) {
+                    this.sourceVisitCount.push(response.data[index]);
+                }
+                resolve(response.data);
+                }).catch((error) => {
+                    reject(error);
+                });
+            });
+    },
 })

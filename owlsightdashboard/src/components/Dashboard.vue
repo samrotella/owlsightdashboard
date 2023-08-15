@@ -89,6 +89,8 @@
         </div>
     </template>
 
+    <!-- UTM Test Link -->
+        <!-- https://testing-site-fju5.onrender.com/?utm_source=twitter&utm_medium=social&utm_campaign=campaign&utm_content=content&utm_term=term -->
     <!-- eslint-disable-next-line -->
     <template class="grid pt-3">
             <!-- eslint-disable-next-line -->
@@ -98,8 +100,8 @@
                 <template #content>
                     <div class="card">
                         <DataTable :value="sources" tableStyle="min-width: 20rem">
-                            <Column field="URLs" header="Pages"></Column>
-                            <Column field="leads" header="Total Leads"></Column>
+                            <Column field="URLs" header="Sources"></Column>
+                            <Column field="visits" header="Visitors"></Column>
                         </DataTable>
                     </div>
                 </template>
@@ -162,7 +164,7 @@ export default {
             inputDate: [date7, new Date()],
             pages: [],
             totalPageCount: 0,
-            sources: null,
+            sources: [],
             macOS: null,
             otherOS: null,
             winOS: null,
@@ -208,11 +210,21 @@ export default {
                             })
                         });
                     // End OS Nightmare
-
                     this.data.getPageVisitsWithCount(this.users.accountDomain).then(() => {
                         for (let index = 0; index < this.data.pageVisitCount.length; index++) {
                             this.pages.push({URLs: data.pageVisitCount[index]._id, visits: data.pageVisitCount[index].count});
                             this.totalPageCount += data.pageVisitCount[index].count;
+                        }
+                    });
+
+                    this.data.getSourcesWithCount(this.users.accountDomain).then(() => {
+                        for (let index = 0; index < this.data.sourceVisitCount.length; index++) {
+                            if (data.sourceVisitCount[index]._id.source === null) {
+                                this.sources.push({URLs: 'direct', visits: data.sourceVisitCount[index].total_owlGuid});    
+                            }
+                            else {
+                                this.sources.push({URLs: data.sourceVisitCount[index]._id.source, visits: data.sourceVisitCount[index].total_owlGuid});    
+                            }
                         }
                     });
                 });
@@ -225,10 +237,10 @@ export default {
         const user = auth.currentUser;
     },
     mounted() {
-        this.sources = [{URLs: 'direct', leads: 100}, 
-                        {URLs: 'www.linkedin.com', leads: 15},
-                        {URLs: 'www.reddit.com', leads: 153},
-                        {URLs: 'www.yahoo.com', leads: 125}];
+        // this.sources = [{URLs: 'direct', leads: 100}, 
+        //                 {URLs: 'www.linkedin.com', leads: 15},
+        //                 {URLs: 'www.reddit.com', leads: 153},
+        //                 {URLs: 'www.yahoo.com', leads: 125}];
     },
     methods: {
         getUser() {

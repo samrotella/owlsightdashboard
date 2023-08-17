@@ -1,43 +1,42 @@
 <template>
+    <!-- Menu - Including Logo, Logout, and Settings button -->
     <Menubar class="col-10 col-offset-1" style="border-style: none; background-color: #121212 ">
         <template #start>
             <template class="flex">
+                <!-- Logo -->
                 <img alt="logo" src="../assets/OwlSight.svg" height="175" class="" />
             </template>
         </template>
+
         <template #end>
+            <!-- Sign Out Button -->
             <Button v-on:click="signOut()" severity="secondary" label=" Logout" text />
 
+            <!-- Settings Button -->
             <Button @click="visible = true" icon="pi pi-cog" />
+
+            <!-- Settings Modal -->
             <!-- eslint-disable-next-line -->
             <Dialog v-model:visible="visible" header="Insert script tag at the bottom of your website's body tag" :style="{ width: '50vw' }">
-                    <p>
-                      <code>
-                        &lt;script>src="https://owlsight.onrender.com/main.js"&lt;/script>
-                      </code>
-                    </p>
-                    <p><Button label="Copy to clipboard" class="" plain text v-on:click="copyScript()" icon="pi pi-copy" /></p>
+                <p>
+                    <code>
+                    &lt;script>src="https://owlsight.onrender.com/main.js"&lt;/script>
+                    </code>
+                </p>
+                <p><Button label="Copy to clipboard" class="" plain text v-on:click="copyScript()" icon="pi pi-copy" /></p>
             </Dialog>
         </template>
     </Menubar>
+    <!-- End of Menu - Including Logo, Logout, and Settings button -->
 
-
+    <!-- Date Range -->
     <template class="grid pb-2 pr-6">
         <div class="col-offset-9">
             <Calendar disabled v-model="inputDate" selectionMode="range" dateFormat="mm/dd/y" :manualInput="false" showIcon />
         </div>
-
-        <!-- <Button label="Show" icon="pi pi-external-link" @click="visible = true" />
-            
-        <Dialog v-model:visible="visible" modal header="Header" :style="{ width: '50vw' }">
-            <p>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
-                Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-            </p>
-        </Dialog> -->
-
     </template>
 
+    <!-- Top Row of Stats -->
     <template class="grid">
         <div class="col-3 col-offset-1">
             <Card>
@@ -72,6 +71,7 @@
         </div>
     </template>
 
+    
     <!-- eslint-disable-next-line -->
     <template class="grid pt-3">
         <div class="col-10 col-offset-1">
@@ -89,8 +89,6 @@
         </div>
     </template>
 
-    <!-- UTM Test Link -->
-        <!-- https://testing-site-fju5.onrender.com/?utm_source=twitter&utm_medium=social&utm_campaign=campaign&utm_content=content&utm_term=term -->
     <!-- eslint-disable-next-line -->
     <template class="grid pt-3">
             <!-- eslint-disable-next-line -->
@@ -134,7 +132,6 @@ export default {
     name: 'Welcome',
     data () {
         return {
-            theName: null,
             visible: false,
             chartDataOperatingSystems: null,
             totalVisits: null,
@@ -170,19 +167,14 @@ export default {
         }
     },
     beforeMount (){
-        //figure out sign in on refresh
-        
         const auth = getAuth();
         onAuthStateChanged(auth, (user) => {
-            console.log('being hit.');
             if (user) {
-                console.log('being hit in if user.');
                 // User is signed in, see docs for a list of available properties
                 // https://firebase.google.com/docs/reference/js/auth.user
                 const uid = user.uid;
-                console.log(uid);
                 const email = user.email;
-                this.theName = email;
+                
                 this.users.getDomain(uid).then(() => {
                     this.data.getUniqueCount(this.users.accountDomain);
                     this.data.getConv(this.users.accountDomain);
@@ -205,6 +197,7 @@ export default {
                             })
                         });
                     // End OS Nightmare
+
                     this.data.getPageVisitsWithCount(this.users.accountDomain).then(() => {
                         for (let index = 0; index < this.data.pageVisitCount.length; index++) {
                             this.pages.push({URLs: data.pageVisitCount[index]._id, visits: data.pageVisitCount[index].count});
@@ -223,21 +216,15 @@ export default {
                         }
                     });
                 });
-                // ...
             } else {
                 // User is signed out
-                this.$router.push('/');
+                this.$router.push('/Login');
             }
         });
         const user = auth.currentUser;
     },
-    mounted() {
-        // this.sources = [{URLs: 'direct', leads: 100}, 
-        //                 {URLs: 'www.linkedin.com', leads: 15},
-        //                 {URLs: 'www.reddit.com', leads: 153},
-        //                 {URLs: 'www.yahoo.com', leads: 125}];
-    },
     methods: {
+        // Pretty sure this method isn't even being used right now...
         getUser() {
             const auth = getAuth();
             const user = auth.currentUser;
@@ -247,8 +234,6 @@ export default {
             const email = user.email;
             const photoURL = user.photoURL;
             const emailVerified = user.emailVerified;
-
-            this.theName = displayName;
 
             // The user's ID, unique to the Firebase project. Do NOT use
             // this value to authenticate with your backend server, if

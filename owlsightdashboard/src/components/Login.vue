@@ -177,12 +177,3 @@ code {
   border-radius: .2rem;
 }
 </style>
-
-<!-- function copyToClipboard () {
-  var copyText = document.getElementById('oneGuid');
-  copyText.select();
-  copyText.setSelectionRange(0, 99999)
-  navigator.clipboard.writeText(copyText.value)
-      .then(() => { alert('Copied!') })
-      .catch((error) => { alert('Copy failed!') })
-} -->

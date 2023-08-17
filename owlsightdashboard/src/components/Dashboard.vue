@@ -1,10 +1,3 @@
-<!-- Menu -->
-<!-- Overall PG Visit Numbers -->
-<!-- Conv or Rev -->
-<!-- Page Visits -->
-<!-- Conv/Rev -->
-<!-- Sources/Lang/OS/Etc. -->
-
 <template>
     <Menubar class="col-10 col-offset-1" style="border-style: none; background-color: #121212 ">
         <template #start>
@@ -14,18 +7,35 @@
         </template>
         <template #end>
             <Button v-on:click="signOut()" severity="secondary" label=" Logout" text />
-            <Button v-on:click="setSnippetModalVis()" icon="pi pi-cog" />
+
+            <Button @click="visible = true" icon="pi pi-cog" />
+            <!-- eslint-disable-next-line -->
+            <Dialog v-model:visible="visible" header="Insert script tag at the bottom of your website's body tag" :style="{ width: '50vw' }">
+                    <p>
+                      <code>
+                        &lt;script>src="https://owlsight.onrender.com/main.js"&lt;/script>
+                      </code>
+                    </p>
+                    <p><Button label="Copy to clipboard" class="" plain text v-on:click="copyScript()" icon="pi pi-copy" /></p>
+            </Dialog>
         </template>
     </Menubar>
 
-    <template v-if="this.snippetModalVisible === true">
-        <SnippetModal></SnippetModal>
-    </template>
 
     <template class="grid pb-2 pr-6">
         <div class="col-offset-9">
             <Calendar disabled v-model="inputDate" selectionMode="range" dateFormat="mm/dd/y" :manualInput="false" showIcon />
         </div>
+
+        <!-- <Button label="Show" icon="pi pi-external-link" @click="visible = true" />
+            
+        <Dialog v-model:visible="visible" modal header="Header" :style="{ width: '50vw' }">
+            <p>
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+                Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+            </p>
+        </Dialog> -->
+
     </template>
 
     <template class="grid">
@@ -60,16 +70,6 @@
                 </template>
             </Card>
         </div>
-        <!-- <div class="col-2 col-offset-0">
-            <Card>
-                <template #subtitle> Average Session </template>
-                <template #content>
-                    <div class="card justify-content-center">
-                        <h2>{{ data.uniqueCount }}</h2>
-                    </div>
-                </template>
-            </Card>
-        </div> -->
     </template>
 
     <!-- eslint-disable-next-line -->
@@ -124,18 +124,14 @@
 
 <script>
 import { firebaseAuth } from '@/api/firebaseauth.js';
-import { getAuth, onAuthStateChanged } from "firebase/auth";
+import { getAuth, onAuthStateChanged, deleteUser } from "firebase/auth";
 import { data } from '../store/modules/data.js'
 import { users } from '../store/modules/users.js'
-import SnippetModal from './SnippetModal.vue'
 const date7 = new Date();
 date7.setDate(date7.getDate() - 7);
 
 export default {
     name: 'Welcome',
-    comments: {
-        SnippetModal
-    },
     data () {
         return {
             theName: null,
@@ -169,7 +165,6 @@ export default {
             otherOS: null,
             winOS: null,
             iphoneOS: null,
-            snippetModalVisible: false,
             data,
             users
         }
@@ -271,6 +266,16 @@ export default {
                 this.$router.push('/')
             });
         },
+        deleteAccount() {
+            const auth = getAuth();
+            const user = auth.currentUser;
+            deleteUser(user).then(() => {
+                // User deleted, push to login
+                }).catch((error) => {
+                // An error ocurred
+                // ...
+            });
+        },
         setChartDataOperatingSystems() {
             const documentStyle = getComputedStyle(document.body);
             return {
@@ -283,11 +288,7 @@ export default {
                     }
                 ]
             };
-            
         },
-        setSnippetModalVis () {
-            this.snippetModalVisible = true;
-        }
     },
 }
 </script>

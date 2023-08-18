@@ -21,11 +21,14 @@ export default {
     switchToSignIn(){
       this.signUp = false;
     },
+    // push the person to the credit card stepper
     signMeUp() {
       let { auth, createUserWithEmailAndPassword } = firebaseAuth;
       createUserWithEmailAndPassword(auth, this.username, this.password)
         .then((user) => {
           var newUserPayload = {
+            // username: payload.username,
+            'username': this.username,
             'domain': this.domain,
             'userGuid': user.user.uid
           }
@@ -47,7 +50,6 @@ export default {
         const { uid } = userCredential.user;
         this.username = null;
         this.password = null;
-        
         this.$router.push('/dashboard')
       }).catch((error) => {
         console.log('error logging in');

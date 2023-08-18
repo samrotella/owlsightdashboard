@@ -218,7 +218,7 @@ export default {
                 });
             } else {
                 // User is signed out
-                this.$router.push('/Login');
+                this.$router.push('/');
             }
         });
         const user = auth.currentUser;

@@ -5,6 +5,7 @@ export const users = reactive({
     createNewInternalUser(payload) {
       return new Promise((resolve, reject) => {
           Axios.post('https://owlsight-api.onrender.com/createNewUser', {
+            username: payload.username,
             userGuid: payload.userGuid,
             domain: payload.domain
           })

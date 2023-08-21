@@ -39,63 +39,63 @@
 </template>
 <!-- <script src="https://js.stripe.com/v3/"></script> -->
 <script>
-import {loadStripe} from '@stripe/stripe-js';
-const stripe = await loadStripe('pk_test_51Nch7ZC5aHNyJdzZYddKrc2rbf8d6akGOFT6MMeJR7pkSQ0HA5ccycRnROmvtrFRyTH8MWrTbl30LHPSdKVTe2Tt00HvLbQLWu');
+// import {loadStripe} from '@stripe/stripe-js';
+// const stripe = await loadStripe('pk_test_51Nch7ZC5aHNyJdzZYddKrc2rbf8d6akGOFT6MMeJR7pkSQ0HA5ccycRnROmvtrFRyTH8MWrTbl30LHPSdKVTe2Tt00HvLbQLWu');
 
 
-export default {
-    name: 'PricingTable',
-    data () {
-        return {
-            stripe:null,
-            cardNumberElement:null,
-            cardExpiryElement:null,
-            cardCVCElement:null,
-            stripeValidationError: ''
-        }
-    },
-    mounted (){
-        // var paymentElement = elements.create('payment');
-        this.stripe = Stripe('pk_test_51Nch7ZC5aHNyJdzZYddKrc2rbf8d6akGOFT6MMeJR7pkSQ0HA5ccycRnROmvtrFRyTH8MWrTbl30LHPSdKVTe2Tt00HvLbQLWu') // add your stripe key
-        const options = {
-            clientSecret: '{{CLIENT_SECRET}}',
-            // Fully customizable with appearance API.
-            appearance: {/*...*/},
-        };
+// export default {
+//     name: 'PricingTable',
+//     data () {
+//         return {
+//             stripe:null,
+//             cardNumberElement:null,
+//             cardExpiryElement:null,
+//             cardCVCElement:null,
+//             stripeValidationError: ''
+//         }
+//     },
+//     mounted (){
+//         // var paymentElement = elements.create('payment');
+//         this.stripe = Stripe('pk_test_51Nch7ZC5aHNyJdzZYddKrc2rbf8d6akGOFT6MMeJR7pkSQ0HA5ccycRnROmvtrFRyTH8MWrTbl30LHPSdKVTe2Tt00HvLbQLWu') // add your stripe key
+//         const options = {
+//             clientSecret: '{{CLIENT_SECRET}}',
+//             // Fully customizable with appearance API.
+//             appearance: {/*...*/},
+//         };
 
-        // Set up Stripe.js and Elements to use in checkout form, passing the client secret obtained in step 5
-        const elements = stripe.elements(options);
-        this.createAndMountFormElements()
-    },
-    methods: {
-        createAndMountFormElements() {
-            var elements = this.stripe.elements()
-            this.cardNumberElement = elements.create('cardNumber')
-            this.cardNumberElement.mount('#card-number-element')
-            this.cardExpiryElement=elements.create('cardExpiry')
-            this.cardExpiryElement.mount('#card-expiry-element')
-            this.cardCvcElement=elements.create('cardCvc')
-            this.cardCvcElement.mount('#card-cvc-element')
-            this.cardNumberElement.on('change', this.setValidationError)
-            this.cardExpiryElement.on('change', this.setValidationError)
-            this.cardCvcElement.on('change', this.setValidationError)
-        },
-        setValidationError(event) {
-            console.log('setValidationError', event)
-            this.stripeValidationError = event.error ? event.error.message : ''
-        },
-        placeOrder () {
-            // this.stripe.createToken(this.cardNumberElement).then(result => {
-            //     console.log('result', result)
-            //     if (result.error) {
-            //     this.stripeValidationError = result.error.message
-            //     } else if (result.token) {
-            //     console.log('token', result.token)
-            //     }
-            // })
-        }
-    },
-}
+//         // Set up Stripe.js and Elements to use in checkout form, passing the client secret obtained in step 5
+//         const elements = stripe.elements(options);
+//         this.createAndMountFormElements()
+//     },
+//     methods: {
+//         createAndMountFormElements() {
+//             var elements = this.stripe.elements()
+//             this.cardNumberElement = elements.create('cardNumber')
+//             this.cardNumberElement.mount('#card-number-element')
+//             this.cardExpiryElement=elements.create('cardExpiry')
+//             this.cardExpiryElement.mount('#card-expiry-element')
+//             this.cardCvcElement=elements.create('cardCvc')
+//             this.cardCvcElement.mount('#card-cvc-element')
+//             this.cardNumberElement.on('change', this.setValidationError)
+//             this.cardExpiryElement.on('change', this.setValidationError)
+//             this.cardCvcElement.on('change', this.setValidationError)
+//         },
+//         setValidationError(event) {
+//             console.log('setValidationError', event)
+//             this.stripeValidationError = event.error ? event.error.message : ''
+//         },
+//         placeOrder () {
+//             // this.stripe.createToken(this.cardNumberElement).then(result => {
+//             //     console.log('result', result)
+//             //     if (result.error) {
+//             //     this.stripeValidationError = result.error.message
+//             //     } else if (result.token) {
+//             //     console.log('token', result.token)
+//             //     }
+//             // })
+//         }
+//     },
+// }
 
 </script>
 

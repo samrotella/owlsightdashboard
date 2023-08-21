@@ -28,8 +28,6 @@
 
 <!-- <script src="https://js.stripe.com/v3/"></script> -->
 <script>
-import {loadStripe} from '@stripe/stripe-js';
-const stripe = await loadStripe('pk_test_51Nch7ZC5aHNyJdzZYddKrc2rbf8d6akGOFT6MMeJR7pkSQ0HA5ccycRnROmvtrFRyTH8MWrTbl30LHPSdKVTe2Tt00HvLbQLWu');
 import { users } from '../store/modules/users.js'
 import { data } from '../store/modules/data.js'
 import { firebaseAuth } from '@/api/firebaseauth.js';

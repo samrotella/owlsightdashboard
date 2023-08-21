@@ -23,6 +23,15 @@
             </Card>
         </div>
     </template>
+    <form id="payment-form">
+        <div id="payment-element">
+            <!-- Elements will create form elements here -->
+        </div>
+        <button id="submit">Subscribe</button>
+        <div id="error-message">
+            <!-- Display error message to your customers here -->
+        </div>
+    </form>
    </div>
 </template>
 
@@ -32,6 +41,7 @@ import { users } from '../store/modules/users.js'
 import { data } from '../store/modules/data.js'
 import { firebaseAuth } from '@/api/firebaseauth.js';
 import { getAuth, onAuthStateChanged, deleteUser } from "firebase/auth";
+const stripe = Stripe('pk_test_51Nch7ZC5aHNyJdzZYddKrc2rbf8d6akGOFT6MMeJR7pkSQ0HA5ccycRnROmvtrFRyTH8MWrTbl30LHPSdKVTe2Tt00HvLbQLWu');
 
 export default {
     name: 'PricingTable',
@@ -111,5 +121,18 @@ export default {
         }
     },
 }
+// uncomment when ready to test
 
+// const options = {
+//   clientSecret: 'pi_3NhKlhC5aHNyJdzZ0PGQcYKe_secret_wt7q0BmgYYIRySEaDHWiDsAzj',
+//   // Fully customizable with appearance API.
+//   appearance: {/*...*/},
+// };
+
+// // Set up Stripe.js and Elements to use in checkout form, passing the client secret obtained in step 5
+// const elements = stripe.elements(options);
+
+// // Create and mount the Payment Element
+// const paymentElement = elements.create('payment');
+// paymentElement.mount('#payment-element');
 </script>

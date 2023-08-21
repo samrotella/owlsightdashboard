@@ -30,14 +30,14 @@ export const users = reactive({
             });
         });
     },
-    createSubscription(price, customerID) {
-      console.log('price from user: ' + price);
-      console.log('price from customerID: ' + customerID);
+    createSubscription(prc, custID) {
+      console.log('prc from user: ' + prc);
+      console.log('custID from user: ' + custID);
       return new Promise((resolve, reject) => {
-        Axios.post(`https://owlsight-api.onrender.com/createSubscription`).then((response) => {
-        // console.log('data domain: ' + response.data.domain);    
-        // this.accountDomain = response.data.domain;
-        // this.customerID = response.data.stripeCustomerId;
+        Axios.post(`https://owlsight-api.onrender.com/createSubscription`, {
+          price: prc,
+          customerID: custID,
+        }).then((response) => {
         console.log(response.data)
         resolve(response.data);
         }).catch((error) => {
@@ -45,15 +45,4 @@ export const users = reactive({
         });
       });
     }
-    // getCustomerID(userGuid) {
-    //   return new Promise((resolve, reject) => {
-    //     Axios.get(`https://owlsight-api.onrender.com/getCustomerID/${userGuid}`).then((response) => {
-    //     console.log('data domain: ' + response.data.domain);    
-    //     this.accountDomain = response.data.domain;
-    //         resolve(response.data.domain);
-    //         }).catch((error) => {
-    //             reject(error);
-    //         });
-    //     });
-    // }
 })

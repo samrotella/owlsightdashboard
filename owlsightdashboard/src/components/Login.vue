@@ -37,7 +37,7 @@ export default {
           this.username = null;
           this.password = null;
           console.log('new user created')
-          this.$router.push('/dashboard')
+          this.$router.push('/PricingTable')
         })
         .catch((error) => {
           console.log('error creating new user');

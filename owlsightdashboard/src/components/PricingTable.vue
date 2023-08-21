@@ -35,12 +35,12 @@
    </div>
 </template>
 
-<!-- <script src="https://js.stripe.com/v3/"></script> -->
 <script>
 import { users } from '../store/modules/users.js'
 import { data } from '../store/modules/data.js'
 import { firebaseAuth } from '@/api/firebaseauth.js';
 import { getAuth, onAuthStateChanged, deleteUser } from "firebase/auth";
+
 const stripe = Stripe('pk_test_51Nch7ZC5aHNyJdzZYddKrc2rbf8d6akGOFT6MMeJR7pkSQ0HA5ccycRnROmvtrFRyTH8MWrTbl30LHPSdKVTe2Tt00HvLbQLWu');
 
 export default {
@@ -52,36 +52,7 @@ export default {
             data
         }
     },
-    beforeMount (){
-        
-    },
-    // beforeCreate (){
-    //     // var paymentElement = elements.create('payment');
-    //     const auth = getAuth();
-    //     onAuthStateChanged(auth, (user) => {
-    //         if (user) {
-    //             // User is signed in, see docs for a list of available properties
-    //             // https://firebase.google.com/docs/reference/js/auth.user
-    //             const uid = user.uid;
-    //             // const email = user.email;
-    //             this.users.getDomain(uid).then((customer) => {
-    //                 // console.log(customer.stripeCustomerId);
-    //                 this.stripeCustomerID = customer.stripeCustomerId;
-    //                 console.log('this.stripeCustomerID: ' + this.stripeCustomerID);
-    //                 // this.subscribeToPro(customer.stripeCustomerId)
-    //             });
-
-    //         } else {
-    //             // User is signed out
-    //             // this.$router.push('/');
-    //             console.log('didnt work');
-
-    //         }
-    //     });
-    //     const user = auth.currentUser;
-    // },
     methods: {
-        // Method that passes price value to the API and creates the subscription
         subscribeToPro() {
             const auth = getAuth();
             onAuthStateChanged(auth, (user) => {
@@ -97,13 +68,54 @@ export default {
                         // this.subscribeToPro(customer.stripeCustomerId)
                     }).then(() => {
                         let priceID = 'price_1Ng93lC5aHNyJdzZB2pxJkfj';
-                        console.log('this.stripeCustomerID: ' + this.stripeCustomerID);
-                        this.users.createSubscription(priceID, this.stripeCustomerID)
+                        this.users.createSubscription(priceID, this.stripeCustomerID).then((sub) => {
+                            // Set up Stripe.js and Elements to use in checkout form, passing the client secret obtained in step 5
+                            
+                            const options = {
+                                //   clientSecret: 'pi_3NhKlhC5aHNyJdzZ0PGQcYKe_secret_wt7q0BmgYYIRySEaDHWiDsAzj',
+                                    clientSecret: sub.latest_invoice.payment_intent.client_secret,
+                                // Fully customizable with appearance API.
+                                    appearance: {/*...*/},
+                            };
+                            const elements = stripe.elements(options);
+
+                            // Create and mount the Payment Element
+                            const paymentElement = elements.create('payment');
+                            paymentElement.mount('#payment-element');
+                            const form = document.getElementById('payment-form');
+
+                            form.addEventListener('submit', async (event) => {
+                            event.preventDefault();
+
+                            const {error} = await stripe.confirmPayment({
+                                //`Elements` instance that was used to create the Payment Element
+                                elements,
+                                confirmParams: {
+                                // return_url: "http://localhost:5173/dashboard",
+                                return_url: "https://owlsightdashboard.onrender.com/dashboard",
+                                }
+                            });
+
+                            if (error) {
+                                // This point will only be reached if there is an immediate error when
+                                // confirming the payment. Show error to your customer (for example, payment
+                                // details incomplete)
+                                const messageContainer = document.querySelector('#error-message');
+                                messageContainer.textContent = error.message;
+                            } else {
+                                // Your customer will be redirected to your `return_url`. For some payment
+                                // methods like iDEAL, your customer will be redirected to an intermediate
+                                // site first to authorize the payment, then redirected to the `return_url`.
+                            }
+                            });
+                        }).then(() => {
+                            
+                        })
                     });
 
                 } else {
                     // User is signed out
-                    // this.$router.push('/');
+                    this.$router.push('/');
                     console.log('didnt work');
 
             }
@@ -118,21 +130,41 @@ export default {
         },
         subscribeToPremium () {
             let priceID = 'price_1Ng94FC5aHNyJdzZ5GmbiZFo';
+        },
+        async confirmPayment () {
+            const {error} = await stripe.confirmPayment({
+                //`Elements` instance that was used to create the Payment Element
+                elements,
+                confirmParams: {
+                    return_url: "https://owlsightdashboard.onrender.com/dashboard",
+                }
+            });
+
+            if (error) {
+                // This point will only be reached if there is an immediate error when
+                // confirming the payment. Show error to your customer (for example, payment
+                // details incomplete)
+                console.log('error on conform payment: ' + error);
+                const messageContainer = document.querySelector('#error-message');
+                messageContainer.textContent = error.message;
+            } else if (paymentIntent && paymentIntent.status === "succeeded") {
+                console.log('worked? ');
+                // Your customer will be redirected to your `return_url`. For some payment
+                // methods like iDEAL, your customer will be redirected to an intermediate
+                // site first to authorize the payment, then redirected to the `return_url`.
+                
+            } else {
+                console.log('paymentIntent: ' + paymentIntent)
+                console.log('paymentIntent.status: ' + paymentIntent.status)
+            }
         }
     },
 }
-// uncomment when ready to test
+// const form = document.getElementById('payment-form');
 
-// const options = {
-//   clientSecret: 'pi_3NhKlhC5aHNyJdzZ0PGQcYKe_secret_wt7q0BmgYYIRySEaDHWiDsAzj',
-//   // Fully customizable with appearance API.
-//   appearance: {/*...*/},
-// };
+// form.addEventListener('submit', async (event) => {
+//   event.preventDefault();
 
-// // Set up Stripe.js and Elements to use in checkout form, passing the client secret obtained in step 5
-// const elements = stripe.elements(options);
-
-// // Create and mount the Payment Element
-// const paymentElement = elements.create('payment');
-// paymentElement.mount('#payment-element');
+  
+// });
 </script>

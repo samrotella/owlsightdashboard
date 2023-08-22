@@ -64,7 +64,7 @@
     </template>
 
     <div class="grid">
-        <form class="col-10 col-offset-1" id="payment-form">
+        <form class="col-8 col-offset-2" id="payment-form">
             <div id="payment-element">
                 <!-- Elements will create form elements here -->
             </div>

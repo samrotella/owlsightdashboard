@@ -118,12 +118,26 @@
         </div> -->
         <div class="col-5 col-offset-0">
             <Card>
-                <template #title> Operating Systems </template>
-                <template #content>
+                <template #title>
+                    Operating Systems 
+                </template>
+                <template #subtitle> 
+                    <button v-on:click="changeOSView()">Change View</button>
+                    <button v-on:click="changeOSView()">Change View</button>
+                </template>
+                <template v-if="something" #content>
                     <div class="card">
                         <DataTable :value="os" tableStyle="min-width: 20rem">
                             <Column field="OperatingSys" header="Sources"></Column>
                             <Column field="visits" header="Visitors"></Column>
+                        </DataTable>
+                    </div>
+                </template>
+                <template v-else #content>
+                    <div class="card">
+                        <DataTable :value="os" tableStyle="min-width: 20rem">
+                            <Column field="OperatingSys" header="ELSE"></Column>
+                            <Column field="visits" header="ELSE"></Column>
                         </DataTable>
                     </div>
                 </template>
@@ -176,6 +190,7 @@ export default {
             otherOS: null,
             winOS: null,
             iphoneOS: null,
+            something: true,
             data,
             users
         }
@@ -294,6 +309,14 @@ export default {
                 ]
             };
         },
+        changeOSView() {
+            if (this.something === true) {
+                this.something = false;
+            }
+            else {
+                this.something = true;
+            }
+        }
     },
 }
 </script>

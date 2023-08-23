@@ -106,12 +106,25 @@
             </Card>
         </div>
         
-        <div class="col-5 col-offset-0">
+        <!-- <div class="col-5 col-offset-0">
             <Card>
                 <template #title> Operating Systems </template>
                 <template #content>
                     <div class="card flex justify-content-center">
                         <Chart type="pie" :data="chartDataOperatingSystems" :options="chartOptionsBrowsers" class="w-full md:w-30rem" />
+                    </div>
+                </template>
+            </Card>
+        </div> -->
+        <div class="col-5 col-offset-0">
+            <Card>
+                <template #title> Operating Systems </template>
+                <template #content>
+                    <div class="card">
+                        <DataTable :value="os" tableStyle="min-width: 20rem">
+                            <Column field="OperatingSys" header="Sources"></Column>
+                            <Column field="visits" header="Visitors"></Column>
+                        </DataTable>
                     </div>
                 </template>
             </Card>
@@ -158,6 +171,7 @@ export default {
             pages: [],
             totalPageCount: 0,
             sources: [],
+            os: [],
             macOS: null,
             otherOS: null,
             winOS: null,
@@ -180,22 +194,22 @@ export default {
                     this.data.getConv(this.users.accountDomain);
 
                     // OS Data - Bruuuutally slow but it works...
-                    this.data.getOS(this.users.accountDomain, 'MacIntel').then((macData) => {
-                        this.macOS = macData;
-                        }).then(() => {
-                            this.data.getOS(this.users.accountDomain, 'Win32').then((windowData) => {
-                                this.winOS = windowData;
-                                this.data.getOS(this.users.accountDomain, 'iPhone').then((iphoneDate) => {
-                                    this.iphoneOS = iphoneDate;
-                                        this.data.getOS(this.users.accountDomain, 'other').then((otherData) => {
-                                            this.otherOS = otherData;
-                                                }).then(() => {
-                                                    this.chartDataOperatingSystems = this.setChartDataOperatingSystems();
-                                                });
-                                })
+                    // this.data.getOS(this.users.accountDomain, 'MacIntel').then((macData) => {
+                    //     this.macOS = macData;
+                    //     }).then(() => {
+                    //         this.data.getOS(this.users.accountDomain, 'Win32').then((windowData) => {
+                    //             this.winOS = windowData;
+                    //             this.data.getOS(this.users.accountDomain, 'iPhone').then((iphoneDate) => {
+                    //                 this.iphoneOS = iphoneDate;
+                    //                     this.data.getOS(this.users.accountDomain, 'other').then((otherData) => {
+                    //                         this.otherOS = otherData;
+                    //                             }).then(() => {
+                    //                                 this.chartDataOperatingSystems = this.setChartDataOperatingSystems();
+                    //                             });
+                    //             })
                                 
-                            })
-                        });
+                    //         })
+                    //     });
                     // End OS Nightmare
 
                     this.data.getPageVisitsWithCount(this.users.accountDomain).then(() => {
@@ -213,6 +227,12 @@ export default {
                             else {
                                 this.sources.push({URLs: data.sourceVisitCount[index]._id.source, visits: data.sourceVisitCount[index].total_owlGuid});    
                             }
+                        }
+                    });
+
+                    this.data.getOS(this.users.accountDomain).then(() => {
+                        for (let index = 0; index < this.data.osVisitCount.length; index++) {
+                            this.os.push({OperatingSys: data.osVisitCount[index]._id.operatingSystem, visits: data.osVisitCount[index].total_owlGuid});    
                         }
                     });
                 });

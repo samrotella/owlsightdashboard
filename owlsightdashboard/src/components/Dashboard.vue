@@ -96,8 +96,8 @@
             <Card>
                 <template #title> UTM Analytics </template>
                 <template #subtitle> 
-                    <Button v-on:click="changeUTMView('source')" size="small" severity="help" label="UTM Source" plain text />
-                    <Button v-on:click="changeUTMView('campaign')" size="small" severity="help" label="UTM Campaign" plain text />
+                    <Button v-on:click="changeUTMView('source')" size="small" severity="help" label="UTM Source" plain :outlined="!sourceUTM" />
+                    <Button v-on:click="changeUTMView('campaign')" size="small" severity="help" label="UTM Campaign" plain :outlined="!campaignUTM" />
                 </template>
                 <template v-if="sourceUTM" #content>
                     <div class="card">
@@ -121,9 +121,11 @@
         <div class="col-5 col-offset-0">
             <Card>
                 <template #title>
-                    Operating Systems 
+                    Details 
                 </template>
                 <template #subtitle> 
+                    <Button size="small" severity="help" label="Operating System" plain/>
+                    <Button size="small" severity="help" label="Browser" disabled outlined plain/>
                 </template>
                 <template #content>
                     <div class="card">

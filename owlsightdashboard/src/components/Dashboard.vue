@@ -94,7 +94,11 @@
             <!-- eslint-disable-next-line -->
         <div class="col-5 col-offset-1">
             <Card>
-                <template #title> Sources </template>
+                <template #title> UTM Analytics </template>
+                <template #subtitle> 
+                    <Button v-on:click="changeUTMViewToSouce()" size="small" severity="help" label="UTM Source" plain text />
+                    <Button v-on:click="changeUTMViewToCampaign()" size="small" severity="help" label="UTM Campaign" plain text />
+                </template>
                 <template #content>
                     <div class="card">
                         <DataTable :value="sources" tableStyle="min-width: 20rem">
@@ -123,21 +127,12 @@
                 </template>
                 <template #subtitle> 
                     <button v-on:click="changeOSView()">Change View</button>
-                    <button v-on:click="changeOSView()">Change View</button>
                 </template>
-                <template v-if="something" #content>
+                <template #content>
                     <div class="card">
                         <DataTable :value="os" tableStyle="min-width: 20rem">
                             <Column field="OperatingSys" header="Sources"></Column>
                             <Column field="visits" header="Visitors"></Column>
-                        </DataTable>
-                    </div>
-                </template>
-                <template v-else #content>
-                    <div class="card">
-                        <DataTable :value="os" tableStyle="min-width: 20rem">
-                            <Column field="OperatingSys" header="ELSE"></Column>
-                            <Column field="visits" header="ELSE"></Column>
                         </DataTable>
                     </div>
                 </template>
@@ -185,12 +180,13 @@ export default {
             pages: [],
             totalPageCount: 0,
             sources: [],
+            campaigns: [],
             os: [],
             macOS: null,
             otherOS: null,
             winOS: null,
             iphoneOS: null,
-            something: true,
+            sourceUTM: true,
             data,
             users
         }
@@ -208,25 +204,6 @@ export default {
                     this.data.getUniqueCount(this.users.accountDomain);
                     this.data.getConv(this.users.accountDomain);
 
-                    // OS Data - Bruuuutally slow but it works...
-                    // this.data.getOS(this.users.accountDomain, 'MacIntel').then((macData) => {
-                    //     this.macOS = macData;
-                    //     }).then(() => {
-                    //         this.data.getOS(this.users.accountDomain, 'Win32').then((windowData) => {
-                    //             this.winOS = windowData;
-                    //             this.data.getOS(this.users.accountDomain, 'iPhone').then((iphoneDate) => {
-                    //                 this.iphoneOS = iphoneDate;
-                    //                     this.data.getOS(this.users.accountDomain, 'other').then((otherData) => {
-                    //                         this.otherOS = otherData;
-                    //                             }).then(() => {
-                    //                                 this.chartDataOperatingSystems = this.setChartDataOperatingSystems();
-                    //                             });
-                    //             })
-                                
-                    //         })
-                    //     });
-                    // End OS Nightmare
-
                     this.data.getPageVisitsWithCount(this.users.accountDomain).then(() => {
                         for (let index = 0; index < this.data.pageVisitCount.length; index++) {
                             this.pages.push({URLs: data.pageVisitCount[index]._id, visits: data.pageVisitCount[index].count});
@@ -241,6 +218,17 @@ export default {
                             }
                             else {
                                 this.sources.push({URLs: data.sourceVisitCount[index]._id.source, visits: data.sourceVisitCount[index].total_owlGuid});    
+                            }
+                        }
+                    });
+
+                    this.data.getCampaignsWithCount(this.users.accountDomain).then(() => {
+                        for (let index = 0; index < this.data.campaignVisitCount.length; index++) {
+                            if (data.campaignVisitCount[index]._id.campaign === null) {
+                                this.campaigns.push({URLs: 'direct', visits: data.campaignVisitCount[index].total_owlGuid});    
+                            }
+                            else {
+                                this.campaigns.push({URLs: data.campaignVisitCount[index]._id.campaign, visits: data.campaignVisitCount[index].total_owlGuid});    
                             }
                         }
                     });
@@ -296,25 +284,12 @@ export default {
                 // ...
             });
         },
-        setChartDataOperatingSystems() {
-            const documentStyle = getComputedStyle(document.body);
-            return {
-                labels: ['Mac', 'Windows', 'iOS', 'Other'],
-                datasets: [
-                    {
-                        data: [this.macOS, this.winOS, this.iphoneOS, this.otherOS],
-                        backgroundColor: [documentStyle.getPropertyValue('--blue-500'), documentStyle.getPropertyValue('--green-500'), documentStyle.getPropertyValue('--yellow-500'), documentStyle.getPropertyValue('--red-500')],
-                        hoverBackgroundColor: [documentStyle.getPropertyValue('--blue-400'), documentStyle.getPropertyValue('--green-400'), documentStyle.getPropertyValue('--yellow-400'),  documentStyle.getPropertyValue('--red-500')]
-                    }
-                ]
-            };
-        },
-        changeOSView() {
-            if (this.something === true) {
-                this.something = false;
+        changeUTMViewToSouce() {
+            if (this.sourceUTM === true) {
+                this.sourceUTM = false;
             }
             else {
-                this.something = true;
+                this.sourceUTM = true;
             }
         }
     },

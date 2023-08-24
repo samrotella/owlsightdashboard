@@ -34,16 +34,6 @@ export const data = reactive({
                 });
             });
     },
-    // getOS(domain, OS) {
-    //     return new Promise((resolve, reject) => {
-    //         Axios.get(`https://owlsight-api.onrender.com/operatingSystem/domain/${domain}/OS/${OS}`).then((response) => {
-    //             console.log(response.data.length);
-    //             resolve(response.data.length);
-    //             }).catch((error) => {
-    //                 reject(error);
-    //             });
-    //     });
-    // },
     getConv(domain) {
         return new Promise((resolve, reject) => {
             Axios.get(`https://owlsight-api.onrender.com/conversions/domain/${domain}`).then((response) => {

@@ -96,10 +96,10 @@
             <Card>
                 <template #title> UTM Analytics </template>
                 <template #subtitle> 
-                    <Button v-on:click="changeUTMViewToSouce()" size="small" severity="help" label="UTM Source" plain text />
-                    <Button v-on:click="changeUTMViewToCampaign()" size="small" severity="help" label="UTM Campaign" plain text />
+                    <Button v-on:click="changeUTMView('source')" size="small" severity="help" label="UTM Source" plain text />
+                    <Button v-on:click="changeUTMView('campaign')" size="small" severity="help" label="UTM Campaign" plain text />
                 </template>
-                <template #content>
+                <template v-if="sourceUTM" #content>
                     <div class="card">
                         <DataTable :value="sources" tableStyle="min-width: 20rem">
                             <Column field="URLs" header="Sources"></Column>
@@ -107,26 +107,23 @@
                         </DataTable>
                     </div>
                 </template>
-            </Card>
-        </div>
-        
-        <!-- <div class="col-5 col-offset-0">
-            <Card>
-                <template #title> Operating Systems </template>
-                <template #content>
-                    <div class="card flex justify-content-center">
-                        <Chart type="pie" :data="chartDataOperatingSystems" :options="chartOptionsBrowsers" class="w-full md:w-30rem" />
+                <template v-else #content>
+                    <div class="card">
+                        <DataTable :value="campaigns" tableStyle="min-width: 20rem">
+                            <Column field="URLs" header="Campaigns"></Column>
+                            <Column field="visits" header="Visitors"></Column>
+                        </DataTable>
                     </div>
                 </template>
             </Card>
-        </div> -->
+        </div>
+        
         <div class="col-5 col-offset-0">
             <Card>
                 <template #title>
                     Operating Systems 
                 </template>
                 <template #subtitle> 
-                    <button v-on:click="changeOSView()">Change View</button>
                 </template>
                 <template #content>
                     <div class="card">
@@ -187,6 +184,7 @@ export default {
             winOS: null,
             iphoneOS: null,
             sourceUTM: true,
+            campaignUTM: false,
             data,
             users
         }
@@ -284,12 +282,15 @@ export default {
                 // ...
             });
         },
-        changeUTMViewToSouce() {
-            if (this.sourceUTM === true) {
-                this.sourceUTM = false;
-            }
-            else {
+        changeUTMView(view) {
+
+            if (view === 'source') {
                 this.sourceUTM = true;
+                this.campaignUTM = false;
+            }
+            else if(view === 'campaign') {
+                this.sourceUTM = false;
+                this.campaignUTM = true;
             }
         }
     },

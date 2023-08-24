@@ -20,8 +20,7 @@ export const users = reactive({
     },
     getDomain(userGuid) {
       return new Promise((resolve, reject) => {
-        Axios.get(`https://owlsight-api.onrender.com/getDomain/${userGuid}`).then((response) => {
-        // console.log('data domain: ' + response.data.domain);    
+        Axios.get(`https://owlsight-api.onrender.com/getDomain/${userGuid}`).then((response) => {   
         this.accountDomain = response.data.domain;
         this.customerID = response.data.stripeCustomerId;
             resolve(response.data);
@@ -31,8 +30,6 @@ export const users = reactive({
         });
     },
     createSubscription(prc, custID) {
-      console.log('prc from user: ' + prc);
-      console.log('custID from user: ' + custID);
       return new Promise((resolve, reject) => {
         Axios.post(`https://owlsight-api.onrender.com/createSubscription`, {
           price: prc,

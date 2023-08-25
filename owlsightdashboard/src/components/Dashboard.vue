@@ -123,11 +123,20 @@
                 <template #title> Campaign Analytics </template>
                 <template #subtitle> 
                     <Button v-on:click="changeUTMView('source')" size="small" severity="help" label="Source" plain :outlined="!sourceUTM" />
+                    <Button v-on:click="changeUTMView('medium')" size="small" severity="help" label="Medium" plain :outlined="!mediumUTM" />
                     <Button v-on:click="changeUTMView('campaign')" size="small" severity="help" label="Campaign" plain :outlined="!campaignUTM" />
                 </template>
                 <template v-if="sourceUTM" #content>
                     <div class="card">
                         <DataTable :value="sources" tableStyle="min-width: 20rem">
+                            <Column field="URLs" header="Sources"></Column>
+                            <Column field="visits" header="Visitors"></Column>
+                        </DataTable>
+                    </div>
+                </template>
+                <template v-else-if="mediumUTM" #content>
+                    <div class="card">
+                        <DataTable :value="medium" tableStyle="min-width: 20rem">
                             <Column field="URLs" header="Sources"></Column>
                             <Column field="visits" header="Visitors"></Column>
                         </DataTable>
@@ -208,6 +217,7 @@ export default {
             totalPageCount: 0,
             sources: [],
             campaigns: [],
+            medium: [],
             os: [],
             macOS: null,
             otherOS: null,
@@ -215,6 +225,7 @@ export default {
             iphoneOS: null,
             sourceUTM: true,
             campaignUTM: false,
+            mediumUTM: false,
             data,
             users
         }
@@ -257,6 +268,17 @@ export default {
                             }
                             else {
                                 this.campaigns.push({URLs: data.campaignVisitCount[index]._id.campaign, visits: data.campaignVisitCount[index].total_owlGuid});    
+                            }
+                        }
+                    });
+
+                    this.data.getMediumWithCount(this.users.accountDomain).then(() => {
+                        for (let index = 0; index < this.data.mediumVisitCount.length; index++) {
+                            if (data.mediumVisitCount[index]._id.campaign === null) {
+                                this.medium.push({URLs: 'direct', visits: data.mediumVisitCount[index].total_owlGuid});    
+                            }
+                            else {
+                                this.medium.push({URLs: data.mediumVisitCount[index]._id.medium, visits: data.mediumVisitCount[index].total_owlGuid});    
                             }
                         }
                     });
@@ -322,10 +344,17 @@ export default {
             if (view === 'source') {
                 this.sourceUTM = true;
                 this.campaignUTM = false;
+                this.mediumUTM = false;
             }
             else if(view === 'campaign') {
                 this.sourceUTM = false;
+                this.mediumUTM = false;
                 this.campaignUTM = true;
+            }
+            else if (view === 'medium') {
+                this.sourceUTM = false;
+                this.campaignUTM = false;
+                this.mediumUTM = true;
             }
         },
         copyScript () {

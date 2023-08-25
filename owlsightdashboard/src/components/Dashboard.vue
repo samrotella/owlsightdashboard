@@ -24,6 +24,15 @@
                 <Button label="Delete Account" severity="danger" plain text v-on:click="deleteAccount()" icon="pi pi-trash" />
             </Dialog>
 
+            <!-- Edit Billing Details  Modal -->
+            <!-- eslint-disable-next-line -->
+            <Dialog v-model:visible="editModalVisible" header="Edit Billing Details" :style="{ width: '50vw' }">
+                <p>
+                    billing details section.
+                </p>
+                <Button label="Update Details" severity="success" plain text v-on:click="editBillingDetails()" icon="pi pi-check" />
+            </Dialog>
+
             <!-- Settings Side Bar -->
             <!-- eslint-disable-next-line -->
             <Sidebar v-model:visible="visible">
@@ -37,7 +46,8 @@
                 <Button label="Copy to clipboard" class="" plain text v-on:click="copyScript()" icon="pi pi-copy" />
 
                 <h2>Account Information</h2>
-                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+                <p>Below is account information. If you have additional questions, always feel free to reach out at owlsightanalytics@gmail.com</p>
+                <Button @click="editModalVisible = true" label="Update Billing Information" severity="warning" plain text icon="pi pi-pencil" />
                 <Button @click="modalVisible = true" label="Delete Account" severity="danger" plain text icon="pi pi-trash" />
             </Sidebar>
             <!-- End Settings Sidebar -->
@@ -110,10 +120,10 @@
             <!-- eslint-disable-next-line -->
         <div class="col-5 col-offset-1">
             <Card>
-                <template #title> UTM Analytics </template>
+                <template #title> Campaign Analytics </template>
                 <template #subtitle> 
-                    <Button v-on:click="changeUTMView('source')" size="small" severity="help" label="UTM Source" plain :outlined="!sourceUTM" />
-                    <Button v-on:click="changeUTMView('campaign')" size="small" severity="help" label="UTM Campaign" plain :outlined="!campaignUTM" />
+                    <Button v-on:click="changeUTMView('source')" size="small" severity="help" label="Source" plain :outlined="!sourceUTM" />
+                    <Button v-on:click="changeUTMView('campaign')" size="small" severity="help" label="Campaign" plain :outlined="!campaignUTM" />
                 </template>
                 <template v-if="sourceUTM" #content>
                     <div class="card">
@@ -171,6 +181,7 @@ export default {
         return {
             visible: false,
             modalVisible: false,
+            editModalVisible: false,
             chartDataOperatingSystems: null,
             totalVisits: null,
             chartOptionsBrowsers: {
@@ -319,6 +330,9 @@ export default {
         },
         copyScript () {
             navigator.clipboard.writeText('<script>src="https://owlsight.onrender.com/main.js"' + '<' + '/script>');
+        },
+        editBillingDetails () {
+            console.log('todo');
         }
     }
 }

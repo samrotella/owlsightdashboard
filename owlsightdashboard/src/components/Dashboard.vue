@@ -15,17 +15,15 @@
             <!-- Settings Button -->
             <Button @click="visible = true" icon="pi pi-cog" />
 
-            <!-- Settings Modal -->
+            <!-- Delete Account Modal -->
             <!-- eslint-disable-next-line -->
-            <!-- <Dialog v-model:visible="visible" header="Insert script tag at the bottom of your website's body tag" :style="{ width: '50vw' }">
+            <Dialog v-model:visible="modalVisible" header="Delete Account" :style="{ width: '50vw' }">
                 <p>
-                    <code>
-                    &lt;script>src="https://owlsight.onrender.com/main.js"&lt;/script>
-                    </code>
+                    Are you sure you want to delete the account? This action can not be undone.
                 </p>
-                <p><Button label="Copy to clipboard" class="" plain text v-on:click="copyScript()" icon="pi pi-copy" /></p>
-            </Dialog> -->
-            <!-- End Settings Modal -->
+                <Button label="Delete Account" severity="danger" plain text v-on:click="deleteAccount()" icon="pi pi-trash" />
+            </Dialog>
+
             <!-- Settings Side Bar -->
             <!-- eslint-disable-next-line -->
             <Sidebar v-model:visible="visible">
@@ -40,7 +38,7 @@
 
                 <h2>Account Information</h2>
                 <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
-                <Button label="Delete Account" severity="danger" plain text v-on:click="deleteAccount()" icon="pi pi-trash" />
+                <Button @click="modalVisible = true" label="Delete Account" severity="danger" plain text icon="pi pi-trash" />
             </Sidebar>
             <!-- End Settings Sidebar -->
         </template>
@@ -172,6 +170,7 @@ export default {
     data () {
         return {
             visible: false,
+            modalVisible: false,
             chartDataOperatingSystems: null,
             totalVisits: null,
             chartOptionsBrowsers: {

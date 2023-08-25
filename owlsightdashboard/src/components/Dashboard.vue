@@ -274,7 +274,7 @@ export default {
 
                     this.data.getMediumWithCount(this.users.accountDomain).then(() => {
                         for (let index = 0; index < this.data.mediumVisitCount.length; index++) {
-                            if (data.mediumVisitCount[index]._id.campaign === null) {
+                            if (data.mediumVisitCount[index]._id.medium === null) {
                                 this.medium.push({URLs: 'direct', visits: data.mediumVisitCount[index].total_owlGuid});    
                             }
                             else {

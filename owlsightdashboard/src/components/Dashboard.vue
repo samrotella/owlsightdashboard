@@ -46,7 +46,7 @@
                 <Button label="Copy to clipboard" class="" plain text v-on:click="copyScript()" icon="pi pi-copy" />
 
                 <h2>Account Information</h2>
-                <p>Below is account information. If you have additional questions, always feel free to reach out at owlsightanalytics@gmail.com</p>
+                <p>If you have additional questions, please reach out to us at owlsightanalytics@gmail.com</p>
                 <Button @click="editModalVisible = true" label="Update Billing Information" severity="warning" plain text icon="pi pi-pencil" />
                 <Button @click="modalVisible = true" label="Delete Account" severity="danger" plain text icon="pi pi-trash" />
             </Sidebar>

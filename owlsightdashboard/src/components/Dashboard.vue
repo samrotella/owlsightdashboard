@@ -17,14 +17,32 @@
 
             <!-- Settings Modal -->
             <!-- eslint-disable-next-line -->
-            <Dialog v-model:visible="visible" header="Insert script tag at the bottom of your website's body tag" :style="{ width: '50vw' }">
+            <!-- <Dialog v-model:visible="visible" header="Insert script tag at the bottom of your website's body tag" :style="{ width: '50vw' }">
                 <p>
                     <code>
                     &lt;script>src="https://owlsight.onrender.com/main.js"&lt;/script>
                     </code>
                 </p>
                 <p><Button label="Copy to clipboard" class="" plain text v-on:click="copyScript()" icon="pi pi-copy" /></p>
-            </Dialog>
+            </Dialog> -->
+            <!-- End Settings Modal -->
+            <!-- Settings Side Bar -->
+            <!-- eslint-disable-next-line -->
+            <Sidebar v-model:visible="visible">
+                <h2>Script</h2>
+                <p>Insert script tag at the bottom of your website's body tag.</p>
+                <p>
+                    <code>
+                    &lt;script>src="https://owlsight.onrender.com/main.js"&lt;/script>
+                    </code>
+                </p>
+                <Button label="Copy to clipboard" class="" plain text v-on:click="copyScript()" icon="pi pi-copy" />
+
+                <h2>Account Information</h2>
+                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+                <Button label="Delete Account" severity="danger" plain text v-on:click="deleteAccount()" icon="pi pi-trash" />
+            </Sidebar>
+            <!-- End Settings Sidebar -->
         </template>
     </Menubar>
     <!-- End of Menu - Including Logo, Logout, and Settings button -->
@@ -96,8 +114,8 @@
             <Card>
                 <template #title> UTM Analytics </template>
                 <template #subtitle> 
-                    <Button v-on:click="changeUTMView('source')" size="small" severity="help" label="UTM Source" plain :outlined="!sourceUTM" />
-                    <Button v-on:click="changeUTMView('campaign')" size="small" severity="help" label="UTM Campaign" plain :outlined="!campaignUTM" />
+                    <Button v-on:click="changeUTMView('source')" size="small" severity="warning" label="UTM Source" plain :outlined="!sourceUTM" />
+                    <Button v-on:click="changeUTMView('campaign')" size="small" severity="warning" label="UTM Campaign" plain :outlined="!campaignUTM" />
                 </template>
                 <template v-if="sourceUTM" #content>
                     <div class="card">
@@ -124,8 +142,8 @@
                     Details 
                 </template>
                 <template #subtitle> 
-                    <Button size="small" severity="help" label="Operating System" plain/>
-                    <Button size="small" severity="help" label="Browser" disabled outlined plain/>
+                    <Button size="small" severity="warning" label="Operating System" plain/>
+                    <Button size="small" severity="warning" label="Browser" disabled outlined plain/>
                 </template>
                 <template #content>
                     <div class="card">
@@ -275,14 +293,26 @@ export default {
             });
         },
         deleteAccount() {
+            // Need to do the following
+                // Delete Stripe Customer Record
+                // Delete Firebase user
+                // Delete the account in Mongo
+                // Push the user back to the login page
+                // Should have double confirmation
+            console.log('this.users.customerID: ' + this.users.customerID)
             const auth = getAuth();
             const user = auth.currentUser;
-            deleteUser(user).then(() => {
-                // User deleted, push to login
+            this.users.deleteStripeCustomer(this.users.customerID).then(() => {
+                deleteUser(user).then(() => {
+                    // User deleted, push to login
+                    this.$router.push('/');
                 }).catch((error) => {
-                // An error ocurred
-                // ...
+                    // An error ocurred
+                    // ...
+                    console.log(error)
             });
+            })
+            
         },
         changeUTMView(view) {
 
@@ -294,7 +324,10 @@ export default {
                 this.sourceUTM = false;
                 this.campaignUTM = true;
             }
+        },
+        copyScript () {
+            navigator.clipboard.writeText('<script>src="https://owlsight.onrender.com/main.js"' + '<' + '/script>');
         }
-    },
+    }
 }
 </script>

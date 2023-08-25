@@ -41,5 +41,17 @@ export const users = reactive({
             reject(error);
         });
       });
-    }
+    },
+    deleteStripeCustomer(customerID) {
+      return new Promise((resolve, reject) => {
+          // Axios.post(`http://localhost:3000/deleteStripeCustomer`, {
+          Axios.post(`https://owlsight-api.onrender.com/deleteStripeCustomer`, {
+              stripeCustomerID: customerID
+            }).then((response) => {
+              resolve(response.data);
+              }).catch((error) => {
+                  reject(error);
+              });
+      });
+  }
 })

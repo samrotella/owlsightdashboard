@@ -112,8 +112,8 @@
             <Card>
                 <template #title> UTM Analytics </template>
                 <template #subtitle> 
-                    <Button v-on:click="changeUTMView('source')" size="small" severity="warning" label="UTM Source" plain :outlined="!sourceUTM" />
-                    <Button v-on:click="changeUTMView('campaign')" size="small" severity="warning" label="UTM Campaign" plain :outlined="!campaignUTM" />
+                    <Button v-on:click="changeUTMView('source')" size="small" severity="help" label="UTM Source" plain :outlined="!sourceUTM" />
+                    <Button v-on:click="changeUTMView('campaign')" size="small" severity="help" label="UTM Campaign" plain :outlined="!campaignUTM" />
                 </template>
                 <template v-if="sourceUTM" #content>
                     <div class="card">
@@ -140,8 +140,8 @@
                     Details 
                 </template>
                 <template #subtitle> 
-                    <Button size="small" severity="warning" label="Operating System" plain/>
-                    <Button size="small" severity="warning" label="Browser" disabled outlined plain/>
+                    <Button size="small" severity="help" label="Operating System" plain/>
+                    <Button size="small" severity="help" label="Browser" disabled outlined plain/>
                 </template>
                 <template #content>
                     <div class="card">
@@ -292,13 +292,6 @@ export default {
             });
         },
         deleteAccount() {
-            // Need to do the following
-                // Delete Stripe Customer Record
-                // Delete Firebase user
-                // Delete the account in Mongo
-                // Push the user back to the login page
-                // Should have double confirmation
-            console.log('this.users.customerID: ' + this.users.customerID)
             const auth = getAuth();
             const user = auth.currentUser;
             this.users.deleteStripeCustomer(this.users.customerID).then(() => {

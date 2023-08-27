@@ -122,9 +122,9 @@
             <Card>
                 <template #title> Campaign Analytics </template>
                 <template #subtitle> 
-                    <Button v-on:click="changeUTMView('source')" size="small" severity="help" label="Source" plain :outlined="!sourceUTM" />
-                    <Button v-on:click="changeUTMView('medium')" size="small" severity="help" label="Medium" plain :outlined="!mediumUTM" />
-                    <Button v-on:click="changeUTMView('campaign')" size="small" severity="help" label="Campaign" plain :outlined="!campaignUTM" />
+                    <Button v-on:click="changeUTMView('source')" size="small" severity="info" label="Source" plain :outlined="!sourceUTM" />
+                    <Button v-on:click="changeUTMView('medium')" size="small" severity="info" label="Medium" plain :outlined="!mediumUTM" />
+                    <Button v-on:click="changeUTMView('campaign')" size="small" severity="info" label="Campaign" plain :outlined="!campaignUTM" />
                 </template>
                 <template v-if="sourceUTM" #content>
                     <div class="card">
@@ -137,7 +137,7 @@
                 <template v-else-if="mediumUTM" #content>
                     <div class="card">
                         <DataTable :value="medium" tableStyle="min-width: 20rem">
-                            <Column field="URLs" header="Sources"></Column>
+                            <Column field="URLs" header="Medium"></Column>
                             <Column field="visits" header="Visitors"></Column>
                         </DataTable>
                     </div>
@@ -159,8 +159,8 @@
                     Details 
                 </template>
                 <template #subtitle> 
-                    <Button size="small" severity="help" label="Operating System" plain/>
-                    <Button size="small" severity="help" label="Browser" disabled outlined plain/>
+                    <Button size="small" severity="info" label="Operating System" plain/>
+                    <Button size="small" severity="info" label="Browser" disabled outlined plain/>
                 </template>
                 <template #content>
                     <div class="card">

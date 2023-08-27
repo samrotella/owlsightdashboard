@@ -128,7 +128,7 @@ export default {
           </template>
 
           <template class="flex justify-content-center p-3">
-            <button v-on:click="signMeUp()">Sign Up</button>
+            <Button class="" v-on:click="signMeUp()"  label="Sign In" />
           </template>
           <template class="flex justify-content-center p-1">
             <Button v-on:click="switchToSignIn()" label="Have an Account? Sign In" link />

@@ -83,8 +83,7 @@ import { users } from '../store/modules/users.js'
 import { data } from '../store/modules/data.js'
 import { firebaseAuth } from '@/api/firebaseauth.js';
 import { getAuth, onAuthStateChanged, deleteUser } from "firebase/auth";
-
-const stripe = Stripe('pk_test_51Nch7ZC5aHNyJdzZYddKrc2rbf8d6akGOFT6MMeJR7pkSQ0HA5ccycRnROmvtrFRyTH8MWrTbl30LHPSdKVTe2Tt00HvLbQLWu');
+const stripe = Stripe(import.meta.env.VITE_STRIPE);
 
 export default {
     name: 'PricingTable',

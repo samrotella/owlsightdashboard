@@ -4,13 +4,13 @@ import { getFirestore, collection } from 'firebase/firestore'
 // ... other firebase imports
 
 const firebaseConfig = {
-    apiKey: "AIzaSyAsc58XOLjRIcdGZvnXj0GO6ZjA_s66plM",
-    authDomain: "owlsightanalytics-ee53e.firebaseapp.com",
-    projectId: "owlsightanalytics-ee53e",
-    storageBucket: "owlsightanalytics-ee53e.appspot.com",
-    messagingSenderId: "69999280009",
-    appId: "1:69999280009:web:c4336ae19bb02068f06b58",
-    measurementId: "G-7SYKMZZCDY"
+    apiKey: import.meta.env.VITE_FIREBASE_API_KEY,
+    authDomain: import.meta.env.VITE_FIREBASE_AUTH_DOMAIN,
+    projectId: import.meta.env.VITE_FIREBASE_PROJECTID,
+    storageBucket: import.meta.env.VITE_APP_FIREBASE_STORAGE_BUCKET,
+    messagingSenderId: import.meta.env.VITE_APP_FIREBASE_MESSAGE_SENDER_ID,
+    appId: import.meta.env.VITE_APP_FIREBASE_APP_ID,
+    measurementId: import.meta.env.VITE_APP_FIREBASE_MEASUREMENT_ID
   };
   const app = initializeApp(firebaseConfig);
 

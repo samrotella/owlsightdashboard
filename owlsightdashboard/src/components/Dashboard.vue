@@ -19,7 +19,7 @@
             <!-- eslint-disable-next-line -->
             <Dialog v-model:visible="modalVisible" header="Delete Account" :style="{ width: '50vw' }">
                 <p>
-                    Are you sure you want to delete the account? This action can not be undone.
+                    Deleting your account will also cancel your subscription. Are you sure you want to delete the account? This action can not be undone.
                 </p>
                 <Button label="Delete Account" severity="danger" plain text v-on:click="deleteAccount()" icon="pi pi-trash" />
             </Dialog>

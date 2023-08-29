@@ -11,11 +11,13 @@ export default {
       domain: '',
       signUp: false,
       scriptTextInput: '',
+      signInError: '',
       users
     }
   },
   methods: {
     switchToSignUp(){
+      this.signInError = '';
       this.signUp = true;
     },
     switchToSignIn(){
@@ -40,7 +42,27 @@ export default {
           this.$router.push('/PricingTable')
         })
         .catch((error) => {
-          console.log('error creating new user');
+          console.log(JSON.stringify(error.code));
+          if (error.code === 'auth/invalid-email') {
+            // Display invalid email
+            this.signInError = 'Username is invalid.';
+          }
+          else if (error.code === 'auth/missing-password') {
+            // Display missing password
+            this.signInError = 'Please enter a password.';
+          }
+          else if (error.code === 'auth/missing-email') {
+            this.signInError = 'Please enter an email address.';
+          }
+          else if (error.code === 'auth/email-already-in-use') {
+            this.signInError = 'There is already an account with this username.';
+          }
+          else if(error.code === 'auth/weak-password') {
+            this.signInError = 'This password is weak. Please create a strong password with more than 6 characters'
+          }
+          else {
+            this.signInError = 'Something went wrong, please try again.';
+          }
         });
     },
     signIn() {
@@ -52,7 +74,26 @@ export default {
         this.password = null;
         this.$router.push('/dashboard')
       }).catch((error) => {
-        console.log('error logging in');
+        console.log(JSON.stringify(error.code));
+        if (error.code === 'auth/wrong-password') {
+          // Display wrong password
+          this.signInError = 'This username or password were not found';
+        }
+        else if (error.code === 'auth/user-not-found') {
+          // Display user not found
+          this.signInError = 'This username or password were not found';
+        }
+        else if (error.code === 'auth/invalid-email') {
+          // Display invalid email
+          this.signInError = 'Username is invalid.';
+        }
+        else if (error.code === 'auth/missing-password') {
+          // Display missing password
+          this.signInError = 'Please enter a password.';
+        }
+        else {
+          this.signInError = 'Something went wrong, please try again.';
+        }
       });
     },
     resetPasswordEmail () {
@@ -80,7 +121,7 @@ export default {
       <template #title> Sign Up </template>
       <template #content>
           <template class="block">
-            <label for="firstname1">Username</label>
+            <label for="firstname1">Email Address</label>
             <template class="flex pt-1">
               <input 
                 v-model="username" 
@@ -113,9 +154,8 @@ export default {
             </template>
           </template>
 
-          <template class="flex justify-content-center p-3">
+          <!-- <template class="flex justify-content-center p-3">
             <div class="card flex justify-content-center">
-              <!-- <Textarea value="<script></script>" rows="3" cols="60" /> -->
                 <Panel header="Copy the script tag and insert at the bottom of your body tag">
                     <p>
                       <code>
@@ -125,10 +165,12 @@ export default {
                     <p><Button label="Copy to clipboard" class="" plain text v-on:click="copyScript()" icon="pi pi-copy" /></p>
                 </Panel>
             </div>
-          </template>
-
+          </template> -->
+          <div v-if="signInError">
+            <p style="color: rgb(220, 85, 85);"> {{ signInError }} </p>
+          </div>
           <template class="flex justify-content-center p-3">
-            <Button class="" v-on:click="signMeUp()"  label="Sign In" />
+            <Button class="" v-on:click="signMeUp()"  label="Sign Up" />
           </template>
           <template class="flex justify-content-center p-1">
             <Button v-on:click="switchToSignIn()" label="Have an Account? Sign In" link />
@@ -140,7 +182,7 @@ export default {
       <template #title> Sign In </template>
       <template #content>
           <template class="block">
-            <label for="firstname1">Username</label>
+            <label for="firstname1">Email Address</label>
             <template class="flex pt-1">
               <input 
                 v-model="username" 
@@ -160,6 +202,9 @@ export default {
                 placeholder="Password">
             </template>
           </template>
+          <div v-if="signInError">
+            <p style="color: rgb(220, 85, 85);"> {{ signInError }} </p>
+          </div>
           <template class="flex justify-content-center p-3">
             <Button class="" v-on:click="signIn()"  label="Sign In" />
           </template>

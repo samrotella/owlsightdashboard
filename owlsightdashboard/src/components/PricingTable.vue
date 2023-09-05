@@ -18,7 +18,9 @@
                 <template #content>
                     <div class="card justify-content-center">
                         <ul style="font-family: Arial, sans-serif;color: rgb(236, 230, 230);">
-                            <li>One domain</li>
+                            <li>Unlimited domain</li>
+                            <li>10,001 - 50,000 Monthly Page Views</li>
+                            <li>Ability to block internal traffic</li>
                             <li>Another Feature</li>
                             <li>More Features</li>
                         </ul> 
@@ -34,13 +36,13 @@
         
         <div class="col-4 col-offset-0 pb-5">
             <Card :style="{
-                backgroundColor: premiumPaymentSelected ? '#5F57FF' : '',
+                backgroundColor: proPaymentSelected ? '#5F57FF' : '',
                 }">
                 <template #header>
                     <!-- <img alt="user header" src="../assets/graphic-tablet_1712521.png" /> -->
                 </template>
-                <template #title> Owlsight Premium </template>
-                <template #subtitle> $15.99 per Month </template>
+                <template #title> Owlsight Pro </template>
+                <template #subtitle> $9.99 per Month </template>
                 <template #content>
                     <div class="card justify-content-center">
                         <ul style="font-family: Arial, sans-serif;color: rgb(236, 230, 230);">
@@ -49,12 +51,13 @@
                             <li>Ability to block internal traffic</li>
                             <li>Another Feature</li>
                             <li>More Features</li>
+                            <li>More Features</li>
                         </ul> 
                     </div>
                 <!-- <button > Subscribe to Pro</button> -->
                 </template>
                 <template #footer>
-                    <Button severity="success" v-on:click="subscribeToPremium()" icon="pi pi-check" label="Subscribe to Premium" />
+                    <Button severity="success" v-on:click="subscribeToPro()" icon="pi pi-check" label="Subscribe to Premium" />
                     <!-- <Button icon="pi pi-times" label="Cancel" severity="secondary" style="margin-left: 0.5em" /> -->
                 </template>
             </Card>
@@ -125,6 +128,15 @@ export default {
     },
     methods: {
         subscribeToFree() {
+            if (this.freePaymentSelected === true) {
+                this.premiumPaymentSelected = false;
+                this.proPaymentSelected = false;
+            }
+            else {
+                this.premiumPaymentSelected = false;
+                this.freePaymentSelected = true;
+                this.proPaymentSelected = false;
+            }
             let priceID = 'price_1Nn1bIC5aHNyJdzZ6uaw32FL';
         },
         subscribeToPro() {
@@ -200,10 +212,12 @@ export default {
         subscribeToPremium () {
             if (this.premiumPaymentSelected === true) {
                 this.proPaymentSelected = false;
+                this.freePaymentSelected = false;
             }
             else {
                 this.premiumPaymentSelected = true;
                 this.proPaymentSelected = false;
+                this.freePaymentSelected = false;
             }
             const auth = getAuth();
             onAuthStateChanged(auth, (user) => {

@@ -6,20 +6,46 @@
         Our pricing plans are tailored to be afordable and suit your business need.
     </p>
     <template class="grid">
-        <div class="col-5 col-offset-1">
+        <div class="col-3 col-offset-1">
             <Card :style="{
-                backgroundColor: proPaymentSelected ? '#5F57FF' : '',
+                backgroundColor: freePaymentSelected ? '#5F57FF' : '',
                 }">
                 <template #header>
                     <!-- <img alt="user header" src="../assets/graphic-tablet_1712521.png" /> -->
                 </template>
-                <template #title> Owlsight Pro </template>
-                <template #subtitle> $9.99 per Month </template>
+                <template #title> Owlsight Free </template>
+                <template #subtitle> Free 99 </template>
                 <template #content>
                     <div class="card justify-content-center">
                         <ul style="font-family: Arial, sans-serif;color: rgb(236, 230, 230);">
                             <li>One domain</li>
-                            <li>0 - 10,000 Monthly Page Views</li>
+                            <li>Another Feature</li>
+                            <li>More Features</li>
+                        </ul> 
+                    </div>
+                <!-- <button > Subscribe to Pro</button> -->
+                </template>
+                <template #footer>
+                    <Button severity="success" v-on:click="subscribeToFree()" icon="pi pi-check" label="Subscribe to Free" />
+                    <!-- <Button icon="pi pi-times" label="Cancel" severity="secondary" style="margin-left: 0.5em" /> -->
+                </template>
+            </Card>
+        </div>
+        
+        <div class="col-4 col-offset-0 pb-5">
+            <Card :style="{
+                backgroundColor: premiumPaymentSelected ? '#5F57FF' : '',
+                }">
+                <template #header>
+                    <!-- <img alt="user header" src="../assets/graphic-tablet_1712521.png" /> -->
+                </template>
+                <template #title> Owlsight Premium </template>
+                <template #subtitle> $15.99 per Month </template>
+                <template #content>
+                    <div class="card justify-content-center">
+                        <ul style="font-family: Arial, sans-serif;color: rgb(236, 230, 230);">
+                            <li>Unlimited domain</li>
+                            <li>10,001 - 50,000 Monthly Page Views</li>
                             <li>Ability to block internal traffic</li>
                             <li>Another Feature</li>
                             <li>More Features</li>
@@ -28,13 +54,12 @@
                 <!-- <button > Subscribe to Pro</button> -->
                 </template>
                 <template #footer>
-                    <Button severity="success" v-on:click="subscribeToPro()" icon="pi pi-check" label="Subscribe to Pro" />
+                    <Button severity="success" v-on:click="subscribeToPremium()" icon="pi pi-check" label="Subscribe to Premium" />
                     <!-- <Button icon="pi pi-times" label="Cancel" severity="secondary" style="margin-left: 0.5em" /> -->
                 </template>
             </Card>
         </div>
-        
-        <div class="col-5 col-offset-0 pb-5">
+        <div class="col-3 col-offset-0 pb-5">
             <Card :style="{
                 backgroundColor: premiumPaymentSelected ? '#5F57FF' : '',
                 }">
@@ -94,16 +119,22 @@ export default {
             paymentSelected: false,
             proPaymentSelected: false,
             premiumPaymentSelected: false,
+            freePaymentSelected: false,
             data
         }
     },
     methods: {
+        subscribeToFree() {
+            let priceID = 'price_1Nn1bIC5aHNyJdzZ6uaw32FL';
+        },
         subscribeToPro() {
             if (this.proPaymentSelected === true) {
                 this.premiumPaymentSelected = false;
+                this.freePaymentSelected = false;
             }
             else {
                 this.premiumPaymentSelected = false;
+                this.freePaymentSelected = false;
                 this.proPaymentSelected = true;
             }
             const auth = getAuth();

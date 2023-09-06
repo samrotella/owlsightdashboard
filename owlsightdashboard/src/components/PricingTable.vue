@@ -57,7 +57,7 @@
                 <!-- <button > Subscribe to Pro</button> -->
                 </template>
                 <template #footer>
-                    <Button severity="success" v-on:click="subscribeToPro()" icon="pi pi-check" label="Subscribe to Premium" />
+                    <Button severity="success" v-on:click="subscribeToPro()" icon="pi pi-check" label="Subscribe to Pro" />
                     <!-- <Button icon="pi pi-times" label="Cancel" severity="secondary" style="margin-left: 0.5em" /> -->
                 </template>
             </Card>
@@ -100,7 +100,9 @@
             <div id="error-message">
                 <!-- Display error message to your customers here -->
             </div>
-            <button id="submit">Subscribe</button>
+            <div v-if="paymentSelected">
+                <button id="submit">Subscribe</button>
+            </div>
         </form>
     </div>
    </div>
@@ -137,7 +139,32 @@ export default {
                 this.freePaymentSelected = true;
                 this.proPaymentSelected = false;
             }
-            let priceID = 'price_1Nn1bIC5aHNyJdzZ6uaw32FL';
+
+            const auth = getAuth();
+            onAuthStateChanged(auth, (user) => {
+                    if (user) {
+                        // User is signed in, see docs for a list of available properties
+                        // https://firebase.google.com/docs/reference/js/auth.user
+                        const uid = user.uid;
+                        this.users.getDomain(uid).then((customer) => {
+                            this.stripeCustomerID = customer.stripeCustomerId;
+                        }).then(() => {
+                            let priceID = 'price_1NnBAGC5aHNyJdzZn6Nku5oM';
+                            this.users.createSubscription(priceID, this.stripeCustomerID).then((sub) => {
+                                this.$router.push('/dashboard');
+                            // Set up Stripe.js and Elements to use in checkout form, passing the client secret obtained in step 5         
+                            
+                            // pretty sure everything below this comment is not needed. Once the free item is selected, payment isn't needed.
+                                // Need to show a differernt button if the client 
+                        })
+                    });
+                }
+                else {
+                    // User is signed out
+                    this.$router.push('/');
+                    console.log('didnt work');
+                }
+            });
         },
         subscribeToPro() {
             if (this.proPaymentSelected === true) {

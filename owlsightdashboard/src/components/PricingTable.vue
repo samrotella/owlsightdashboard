@@ -129,6 +129,9 @@ export default {
         }
     },
     methods: {
+        subscribeToFreeModal () {
+
+        },
         subscribeToFree() {
             if (this.freePaymentSelected === true) {
                 this.premiumPaymentSelected = false;

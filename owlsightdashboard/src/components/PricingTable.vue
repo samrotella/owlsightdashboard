@@ -1,6 +1,15 @@
 <template>
    <!-- insert two cards, one 'basic' and one 'pro' -->
+   <!-- eslint-disable-next-line -->
    <div>
+    <!-- eslint-disable-next-line -->
+    <Dialog v-model:visible="freeModalVisible" header="Subscribe to Owlsight Basic" :style="{ width: '50vw' }">
+        <p>
+            Confirm subscription.
+        </p>
+        <Button label="Confirm" severity="success" v-on:click="subscribeToFree()" icon="pi pi-check" />
+    </Dialog>
+    
     <h1 class="flex justify-content-center">Choose your plan</h1>
     <p class="flex justify-content-center">
         Our pricing plans are tailored to be afordable and suit your business need.
@@ -13,8 +22,8 @@
                 <template #header>
                     <!-- <img alt="user header" src="../assets/graphic-tablet_1712521.png" /> -->
                 </template>
-                <template #title> Owlsight Free </template>
-                <template #subtitle> Free 99 </template>
+                <template #title> Owlsight Basic </template>
+                <template #subtitle> Free </template>
                 <template #content>
                     <div class="card justify-content-center">
                         <ul style="font-family: Arial, sans-serif;color: rgb(236, 230, 230);">
@@ -28,7 +37,7 @@
                 <!-- <button > Subscribe to Pro</button> -->
                 </template>
                 <template #footer>
-                    <Button severity="success" v-on:click="subscribeToFree()" icon="pi pi-check" label="Subscribe to Free" />
+                    <Button severity="success" @click="freeModalVisible = true" icon="pi pi-check" label="Subscribe to Basic" />
                     <!-- <Button icon="pi pi-times" label="Cancel" severity="secondary" style="margin-left: 0.5em" /> -->
                 </template>
             </Card>
@@ -125,13 +134,11 @@ export default {
             proPaymentSelected: false,
             premiumPaymentSelected: false,
             freePaymentSelected: false,
+            freeModalVisible: false,
             data
         }
     },
     methods: {
-        subscribeToFreeModal () {
-
-        },
         subscribeToFree() {
             if (this.freePaymentSelected === true) {
                 this.premiumPaymentSelected = false;

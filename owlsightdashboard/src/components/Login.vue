@@ -12,6 +12,7 @@ export default {
       signUp: false,
       scriptTextInput: '',
       signInError: '',
+      resetPassword: '',
       users
     }
   },
@@ -97,14 +98,16 @@ export default {
       });
     },
     resetPasswordEmail () {
+      this.signInError = '';
+      this.resetPassword = 'If we have an email on record, one will be sent momentarily'
       let { auth, sendPasswordResetEmail } = firebaseAuth;
-      
       sendPasswordResetEmail(auth, this.username)
         .then(() => {
             this.passwordSent = true;
         })
         .catch((error) => {
             var errorMessage = error.message;
+            console.log(errorMessage)
         });
     },
     copyScript () {
@@ -205,11 +208,17 @@ export default {
           <div v-if="signInError">
             <p style="color: rgb(220, 85, 85);"> {{ signInError }} </p>
           </div>
+          <div v-if="resetPassword">
+            <p style="color: rgb(255, 255, 255);"> {{ resetPassword }} </p>
+          </div>
           <template class="flex justify-content-center p-3">
             <Button class="" v-on:click="signIn()"  label="Sign In" />
           </template>
           <template class="flex justify-content-center p-1">
             <Button v-on:click="switchToSignUp()" label="New Here? Sign Up!" link />
+          </template>
+          <template class="flex justify-content-center p-1">
+            <Button v-on:click="resetPasswordEmail()" label="Reset Password" link />
           </template>
       </template>
   </Card>

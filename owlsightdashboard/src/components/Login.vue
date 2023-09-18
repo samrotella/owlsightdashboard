@@ -208,9 +208,12 @@ export default {
           <div v-if="signInError">
             <p style="color: rgb(220, 85, 85);"> {{ signInError }} </p>
           </div>
-          <div v-if="resetPassword">
-            <p style="color: rgb(255, 255, 255);"> {{ resetPassword }} </p>
+          <template class="flex justify-content-center p-1">
+            <div v-if="resetPassword">
+            <p style="color: rgb(118, 142, 220);"> {{ resetPassword }} </p>
           </div>
+          </template>
+          
           <template class="flex justify-content-center p-3">
             <Button class="" v-on:click="signIn()"  label="Sign In" />
           </template>

@@ -126,6 +126,7 @@
                     <Button v-on:click="changeUTMView('medium')" size="small" severity="info" label="Medium" plain :outlined="!mediumUTM" />
                     <Button v-on:click="changeUTMView('campaign')" size="small" severity="info" label="Campaign" plain :outlined="!campaignUTM" />
                     <Button v-on:click="changeUTMView('content')" size="small" severity="info" label="Content" plain :outlined="!contentUTM" />
+                    <Button v-on:click="changeUTMView('term')" size="small" severity="info" label="Term" plain :outlined="!termUTM" />
                 </template>
                 <template v-if="sourceUTM" #content>
                     <div class="card">
@@ -229,6 +230,7 @@ export default {
             campaigns: [],
             medium: [],
             content: [],
+            term: [],
             os: [],
             macOS: null,
             otherOS: null,
@@ -238,6 +240,7 @@ export default {
             campaignUTM: false,
             mediumUTM: false,
             contentUTM: false,
+            termUTM: false,
             data,
             users
         }
@@ -306,6 +309,17 @@ export default {
                         }
                     });
 
+                    this.data.getTermWithCount(this.users.accountDomain).then(() => {
+                        for (let index = 0; index < this.data.termVisitCount.length; index++) {
+                            if (data.termVisitCount[index]._id.term === null) {
+                                this.term.push({URLs: 'direct', visits: data.termVisitCount[index].total_owlGuid});    
+                            }
+                            else {
+                                this.term.push({URLs: data.termVisitCount[index]._id.term, visits: data.termVisitCount[index].total_owlGuid});    
+                            }
+                        }
+                    });
+
                     this.data.getOS(this.users.accountDomain).then(() => {
                         for (let index = 0; index < this.data.osVisitCount.length; index++) {
                             this.os.push({OperatingSys: data.osVisitCount[index]._id.operatingSystem, visits: data.osVisitCount[index].total_owlGuid});    
@@ -369,24 +383,35 @@ export default {
                 this.campaignUTM = false;
                 this.mediumUTM = false;
                 this.contentUTM = false;
+                this.termUTM = false;
             }
             else if(view === 'campaign') {
                 this.sourceUTM = false;
                 this.mediumUTM = false;
                 this.campaignUTM = true;
                 this.contentUTM = false;
+                this.termUTM = false;
             }
             else if (view === 'medium') {
                 this.sourceUTM = false;
                 this.campaignUTM = false;
                 this.mediumUTM = true;
                 this.contentUTM = false;
+                this.termUTM = false;
             }
             else if (view === 'content') {
                 this.contentUTM = true;
                 this.sourceUTM = false;
                 this.campaignUTM = false;
                 this.mediumUTM = false;
+                this.termUTM = false;
+            }
+            else if (view === 'term') {
+                this.contentUTM = false;
+                this.sourceUTM = false;
+                this.campaignUTM = false;
+                this.mediumUTM = false;
+                this.termUTM = true;
             }
         },
         copyScript () {

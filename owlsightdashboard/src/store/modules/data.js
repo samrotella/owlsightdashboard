@@ -7,6 +7,7 @@ export const data = reactive({
     sourceVisitCount: [],
     campaignVisitCount: [],
     mediumVisitCount: [],
+    contentVisitCount: [],
     osVisitCount: [],
     result: [],
     convCount: 0,
@@ -77,6 +78,19 @@ export const data = reactive({
             Axios.get(`https://owlsight-api.onrender.com/mediumWithCounts/domain/${domain}`).then((response) => {
                 for (let index = 0; index < response.data.length; index++) {
                     this.mediumVisitCount.push(response.data[index]);
+                }
+                resolve(response.data);
+                }).catch((error) => {
+                    reject(error);
+                });
+            });
+    },
+    getContentWithCount(domain) {
+        return new Promise((resolve, reject) => {
+            // Axios.get(`http://localhost:3000/sourcesWithCounts/domain/${domain}`).then((response) => {
+            Axios.get(`https://owlsight-api.onrender.com/contentWithCounts/domain/${domain}`).then((response) => {
+                for (let index = 0; index < response.data.length; index++) {
+                    this.contentVisitCount.push(response.data[index]);
                 }
                 resolve(response.data);
                 }).catch((error) => {

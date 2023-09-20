@@ -125,6 +125,7 @@
                     <Button v-on:click="changeUTMView('source')" size="small" severity="info" label="Source" plain :outlined="!sourceUTM" />
                     <Button v-on:click="changeUTMView('medium')" size="small" severity="info" label="Medium" plain :outlined="!mediumUTM" />
                     <Button v-on:click="changeUTMView('campaign')" size="small" severity="info" label="Campaign" plain :outlined="!campaignUTM" />
+                    <Button v-on:click="changeUTMView('content')" size="small" severity="info" label="Content" plain :outlined="!contentUTM" />
                 </template>
                 <template v-if="sourceUTM" #content>
                     <div class="card">
@@ -142,6 +143,14 @@
                         </DataTable>
                     </div>
                 </template>
+                <template v-else-if="contentUTM" #content>
+                    <div class="card">
+                        <DataTable :value="content" tableStyle="min-width: 20rem">
+                            <Column field="URLs" header="Content"></Column>
+                            <Column field="visits" header="Visitors"></Column>
+                        </DataTable>
+                    </div>
+                </template>
                 <template v-else #content>
                     <div class="card">
                         <DataTable :value="campaigns" tableStyle="min-width: 20rem">
@@ -150,6 +159,7 @@
                         </DataTable>
                     </div>
                 </template>
+
             </Card>
         </div>
         
@@ -218,6 +228,7 @@ export default {
             sources: [],
             campaigns: [],
             medium: [],
+            content: [],
             os: [],
             macOS: null,
             otherOS: null,
@@ -226,6 +237,7 @@ export default {
             sourceUTM: true,
             campaignUTM: false,
             mediumUTM: false,
+            contentUTM: false,
             data,
             users
         }
@@ -279,6 +291,17 @@ export default {
                             }
                             else {
                                 this.medium.push({URLs: data.mediumVisitCount[index]._id.medium, visits: data.mediumVisitCount[index].total_owlGuid});    
+                            }
+                        }
+                    });
+
+                    this.data.getContentWithCount(this.users.accountDomain).then(() => {
+                        for (let index = 0; index < this.data.contentVisitCount.length; index++) {
+                            if (data.contentVisitCount[index]._id.content === null) {
+                                this.content.push({URLs: 'direct', visits: data.contentVisitCount[index].total_owlGuid});    
+                            }
+                            else {
+                                this.content.push({URLs: data.contentVisitCount[index]._id.content, visits: data.contentVisitCount[index].total_owlGuid});    
                             }
                         }
                     });
@@ -345,16 +368,25 @@ export default {
                 this.sourceUTM = true;
                 this.campaignUTM = false;
                 this.mediumUTM = false;
+                this.contentUTM = false;
             }
             else if(view === 'campaign') {
                 this.sourceUTM = false;
                 this.mediumUTM = false;
                 this.campaignUTM = true;
+                this.contentUTM = false;
             }
             else if (view === 'medium') {
                 this.sourceUTM = false;
                 this.campaignUTM = false;
                 this.mediumUTM = true;
+                this.contentUTM = false;
+            }
+            else if (view === 'content') {
+                this.contentUTM = true;
+                this.sourceUTM = false;
+                this.campaignUTM = false;
+                this.mediumUTM = false;
             }
         },
         copyScript () {

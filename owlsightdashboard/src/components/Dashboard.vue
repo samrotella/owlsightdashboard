@@ -152,6 +152,14 @@
                         </DataTable>
                     </div>
                 </template>
+                <template v-else-if="termUTM" #content>
+                    <div class="card">
+                        <DataTable :value="term" tableStyle="min-width: 20rem">
+                            <Column field="URLs" header="Term"></Column>
+                            <Column field="visits" header="Visitors"></Column>
+                        </DataTable>
+                    </div>
+                </template>
                 <template v-else #content>
                     <div class="card">
                         <DataTable :value="campaigns" tableStyle="min-width: 20rem">

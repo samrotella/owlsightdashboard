@@ -120,7 +120,13 @@
             <!-- eslint-disable-next-line -->
         <div class="col-5 col-offset-1">
             <Card>
-                <template #title> Campaign Analytics </template>
+                <template #title > Campaign Analytics
+                    <!--   align-items-center   -->
+                    <!-- <template> -->
+                        <!-- <Button icon="pi pi-plus" severity="help" rounded outlined aria-label="Favorite" /> -->
+                        <Button v-on:click="buildUTMLink()" class="pt-4" icon="pi pi-plus" severity="info" text rounded aria-label="Favorite" />
+                    <!-- </template> -->
+                </template>
                 <template #subtitle> 
                     <Button v-on:click="changeUTMView('source')" size="small" severity="info" label="Source" plain :outlined="!sourceUTM" />
                     <Button v-on:click="changeUTMView('medium')" size="small" severity="info" label="Medium" plain :outlined="!mediumUTM" />
@@ -426,6 +432,9 @@ export default {
             navigator.clipboard.writeText('<script>src="https://owlsight.onrender.com/main.js"' + '<' + '/script>');
         },
         editBillingDetails () {
+            console.log('todo');
+        },
+        buildUTMLink() {
             console.log('todo');
         }
     }

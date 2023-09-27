@@ -65,11 +65,16 @@
     <!-- Chart -->
     <template class="grid">
         <div class="col-10 col-offset-1">
-            <div class="card">
-                <Chart type="line" :data="chartData" :options="chartOptions" class="h-10rem" />
-            </div>
+            <Card>
+                <template #content>
+                    <div class="card">
+                        <Chart type="line" :data="chartData" :options="chartOptions" class="h-10rem" />
+                    </div>
+                </template>
+            </Card>
         </div>
     </template>
+    <!-- End of Chart -->
 
     <!-- Top Row of Stats -->
     <template class="grid">
@@ -106,7 +111,6 @@
         </div>
     </template>
 
-    <!-- End of Chart -->
     <!-- eslint-disable-next-line -->
     <template class="grid pt-3">
         <div class="col-10 col-offset-1">
@@ -285,12 +289,7 @@ export default {
                     this.data.getChartMetrics(this.users.accountDomain).then(() => {
                         this.chartOptions = this.setChartOptions();
                         this.chartData = this.setChartData();
-                        // for (let index = 0; index < this.data.chartMetrics.length; index++) {
-                        //     console.log(data.chartMetrics[index]);
-                        //     this.fuck.push(data.chartMetrics[index])
-                        // }
                     });
-                    //console.log(this.data.getChartMetrics(this.users.accountDomain));
 
                     this.data.getPageVisitsWithCount(this.users.accountDomain).then(() => {
                         for (let index = 0; index < this.data.pageVisitCount.length; index++) {
@@ -467,6 +466,13 @@ export default {
                         data: this.data.chartMetrics,
                         fill: false,
                         borderColor: documentStyle.getPropertyValue('--blue-500'),
+                        tension: 0.4
+                    },
+                    {
+                        label: 'Unique Page Visits',
+                        data: this.data.uniqueChartMetrics,
+                        fill: false,
+                        borderColor: documentStyle.getPropertyValue('--green-500'),
                         tension: 0.4
                     }
                 ]

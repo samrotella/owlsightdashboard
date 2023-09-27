@@ -12,6 +12,8 @@ export const data = reactive({
     osVisitCount: [],
     result: [],
     chartMetrics: [],
+    conversionMetrics: [],
+    conversionDates: [],
     chartDates: [],
     convCount: 0,
     getUniqueCount(domain) {
@@ -33,6 +35,20 @@ export const data = reactive({
                 for (let index = 0; index < response.data.length; index++) {
                     this.chartMetrics.push(response.data[index].count);
                     this.chartDates.push(response.data[index]._id);
+                }
+                resolve(response.data);
+                }).catch((error) => {
+                    reject(error);
+                });
+            });
+    },
+    getConversionChartMetrics (domain) { 
+        return new Promise((resolve, reject) => {
+            // Axios.get(`http://localhost:3000/pageVisitsWithCounts`).then((response) => {
+            Axios.get(`https://owlsight-api.onrender.com/conversionchartmetrics/domain/${domain}`).then((response) => {
+                for (let index = 0; index < response.data.length; index++) {
+                    this.conversionMetrics.push(response.data[index].count);
+                    this.conversionDates.push(response.data[index]._id);
                 }
                 resolve(response.data);
                 }).catch((error) => {

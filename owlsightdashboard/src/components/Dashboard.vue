@@ -62,6 +62,15 @@
         </div>
     </template>
 
+    <!-- Chart -->
+    <template class="grid">
+        <div class="col-10 col-offset-1">
+            <div class="card">
+                <Chart type="line" :data="chartData" :options="chartOptions" class="h-10rem" />
+            </div>
+        </div>
+    </template>
+
     <!-- Top Row of Stats -->
     <template class="grid">
         <div class="col-3 col-offset-1">
@@ -94,15 +103,6 @@
                     </div>
                 </template>
             </Card>
-        </div>
-    </template>
-
-    <!-- Chart -->
-    <template class="grid">
-        <div class="col-10 col-offset-1">
-            <div class="card">
-                <Chart type="line" :data="chartData" :options="chartOptions" class="h-10rem" />
-            </div>
         </div>
     </template>
 
@@ -270,10 +270,6 @@ export default {
             users
         }
     },
-    mounted() {
-        this.chartData = this.setChartData();
-        this.chartOptions = this.setChartOptions();
-    },
     beforeMount (){
         const auth = getAuth();
         onAuthStateChanged(auth, (user) => {
@@ -286,6 +282,15 @@ export default {
                 this.users.getDomain(uid).then(() => {
                     this.data.getUniqueCount(this.users.accountDomain);
                     this.data.getConv(this.users.accountDomain);
+                    this.data.getChartMetrics(this.users.accountDomain).then(() => {
+                        this.chartOptions = this.setChartOptions();
+                        this.chartData = this.setChartData();
+                        // for (let index = 0; index < this.data.chartMetrics.length; index++) {
+                        //     console.log(data.chartMetrics[index]);
+                        //     this.fuck.push(data.chartMetrics[index])
+                        // }
+                    });
+                    //console.log(this.data.getChartMetrics(this.users.accountDomain));
 
                     this.data.getPageVisitsWithCount(this.users.accountDomain).then(() => {
                         for (let index = 0; index < this.data.pageVisitCount.length; index++) {
@@ -454,22 +459,14 @@ export default {
         },
         setChartData() {
             const documentStyle = getComputedStyle(document.documentElement);
-
             return {
-                labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
+                labels: this.data.chartDates,
                 datasets: [
                     {
-                        label: 'First Dataset',
-                        data: [65, 59, 80, 81, 56, 55, 40],
+                        label: 'Total Page Visits',
+                        data: this.data.chartMetrics,
                         fill: false,
                         borderColor: documentStyle.getPropertyValue('--blue-500'),
-                        tension: 0.4
-                    },
-                    {
-                        label: 'Second Dataset',
-                        data: [28, 48, 40, 19, 86, 27, 90],
-                        fill: false,
-                        borderColor: documentStyle.getPropertyValue('--pink-500'),
                         tension: 0.4
                     }
                 ]

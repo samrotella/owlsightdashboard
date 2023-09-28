@@ -65,7 +65,7 @@
     <!-- Top Row of Stats -->
     <template class="grid">
         <!-- class="md:col-3 md:col-offset-1 lg:col-6 lg:col-offset-3" -->
-        <div class="lg:col-3 lg:col-offset-1 md:col-10 md:col-offset-1">
+        <div class="col-10 col-offset-1 lg:col-3 lg:col-offset-1 md:col-10 md:col-offset-1">
             <Card>
                 <template #subtitle> Unique Page Visits </template>
                 <template #content>
@@ -76,7 +76,7 @@
             </Card>
         </div>
         
-        <div class="lg:col-4 lg:col-offset-0 md:col-10 md:col-offset-1">
+        <div class="col-10 col-offset-1 lg:col-4 lg:col-offset-0 md:col-10 md:col-offset-1">
             <Card>
                 <template #subtitle> Total Conversions </template>
                 <template #content>
@@ -86,7 +86,7 @@
                 </template>
             </Card>
         </div>
-        <div class="lg:col-3 lg:col-offset-0 md:col-10 md:col-offset-1">
+        <div class="col-10 col-offset-1 lg:col-3 lg:col-offset-0 md:col-10 md:col-offset-1">
             <Card>
                 <template #subtitle> Total Page Visits </template>
                 <template #content>

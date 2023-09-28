@@ -98,7 +98,7 @@
     </template>
 
     <!-- Chart -->
-    <template class="grid">
+    <template class="grid pt-3">
         <div class="col-10 col-offset-1">
             <Card>
                 <template #content>

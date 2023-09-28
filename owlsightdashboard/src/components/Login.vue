@@ -181,7 +181,7 @@ export default {
       </template>
   </Card>
 
-  <Card v-else class="col-6 col-offset-3">
+  <Card v-else class="md:col-3 md:col-offset-1 lg:col-6 lg:col-offset-3">
       <template #title> Sign In </template>
       <template #content>
           <template class="block">

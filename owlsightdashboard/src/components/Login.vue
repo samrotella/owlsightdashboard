@@ -120,7 +120,7 @@ export default {
 
 <!-- Sign Up -->
 <template class="grid">
-  <Card v-if="this.signUp" class="col-6 col-offset-3">
+  <Card v-if="this.signUp" class="md:col-3 md:col-offset-1 lg:col-6 lg:col-offset-3">
       <template #title> Sign Up </template>
       <template #content>
           <template class="block">

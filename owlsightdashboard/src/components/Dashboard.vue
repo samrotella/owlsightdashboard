@@ -62,20 +62,6 @@
         </div>
     </template>
 
-    <!-- Chart -->
-    <template class="grid">
-        <div class="col-10 col-offset-1">
-            <Card>
-                <template #content>
-                    <div class="card">
-                        <Chart type="line" :data="chartData" :options="chartOptions" class="h-10rem" />
-                    </div>
-                </template>
-            </Card>
-        </div>
-    </template>
-    <!-- End of Chart -->
-
     <!-- Top Row of Stats -->
     <template class="grid">
         <div class="col-3 col-offset-1">
@@ -110,6 +96,20 @@
             </Card>
         </div>
     </template>
+
+    <!-- Chart -->
+    <template class="grid">
+        <div class="col-10 col-offset-1">
+            <Card>
+                <template #content>
+                    <div class="card">
+                        <Chart type="line" :data="chartData" :options="chartOptions" class="h-10rem" />
+                    </div>
+                </template>
+            </Card>
+        </div>
+    </template>
+    <!-- End of Chart -->
 
     <!-- eslint-disable-next-line -->
     <template class="grid pt-3">
@@ -466,13 +466,6 @@ export default {
                         data: this.data.chartMetrics,
                         fill: false,
                         borderColor: documentStyle.getPropertyValue('--blue-500'),
-                        tension: 0.4
-                    },
-                    {
-                        label: 'Unique Page Visits',
-                        data: this.data.uniqueChartMetrics,
-                        fill: false,
-                        borderColor: documentStyle.getPropertyValue('--green-500'),
                         tension: 0.4
                     }
                 ]

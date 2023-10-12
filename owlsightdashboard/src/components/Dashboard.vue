@@ -98,7 +98,7 @@
                             class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full"  
                             disabled> -->
                             <!-- <p>{{ generatedLink }}</p> -->
-                            <p>{{ webAddress + sourceUrlUTM + mediumUrlUTM + campaignUrlUTM + contentUrlUTM + termUrlUTM}}</p>
+                            <p>{{ webAddress + '?utm_source=' + sourceUrlUTM + '&utm_medium=' + mediumUrlUTM + '&utm_campaign=' + campaignUrlUTM + '&utm_content=' + contentUrlUTM + '&utm_term=' + termUrlUTM}}</p>
                 </template>
                 <Button label="Copy Link" severity="success" plain text v-on:click="copyToClipboard()" icon="pi pi-check" />
             </Dialog>
@@ -343,12 +343,12 @@ export default {
             termUTM: false,
             chartData: null,
             chartOptions: null,
-            webAddress: null,
-            sourceUrlUTM: null,
-            mediumUrlUTM: null,
-            campaignUrlUTM: null,
-            contentUrlUTM: null,
-            termUrlUTM: null,
+            webAddress: '',
+            sourceUrlUTM: '',
+            mediumUrlUTM: '',
+            campaignUrlUTM: '',
+            contentUrlUTM: '',
+            termUrlUTM: '',
             data,
             users
         }

@@ -33,6 +33,76 @@
                 <Button label="Update Details" severity="success" plain text v-on:click="editBillingDetails()" icon="pi pi-check" />
             </Dialog>
 
+            <!-- UTM  Modal -->
+            <!-- eslint-disable-next-line -->
+            <Dialog v-model:visible="UTMModalVisible" header="Build UTM Link" :style="{ width: '50vw' }">
+                <template class="block pt-2 pb-2">
+                    <label for="url">Website Address</label>
+                    <template class="flex pt-1">
+                        <input 
+                            v-model="webAddress" 
+                            class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full">
+                    </template>
+                </template>
+                <template class="block pt-2 pb-2">
+                    <label for="firstname1">UTM Source</label>
+                    <template class="flex pt-1">
+                        <input 
+                            v-model="sourceUrlUTM" 
+                            class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full" >
+                    </template>
+                </template>
+                <template class="block pt-2 pb-2">
+                    <label for="firstname1">UTM Medium</label>
+                    <template class="flex pt-1">
+                        <input 
+                            v-model="mediumUrlUTM" 
+                            class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full">
+                    </template>
+                </template>
+                <template class="block pt-2 pb-2">
+                    <label for="firstname1">UTM Campaign</label>
+                    <template class="flex pt-1">
+                        <input 
+                            v-model="campaignUrlUTM" 
+                            class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full" 
+                            type="email"
+                            placeholder="email@gmail.com">
+                    </template>
+                </template>
+                <template class="block pt-2 pb-2">
+                    <label for="firstname1">UTM Content</label>
+                    <template class="flex pt-1">
+                        <input 
+                            v-model="contentUrlUTM" 
+                            class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full" 
+                            type="email"
+                            placeholder="email@gmail.com">
+                    </template>
+                </template>
+                <template class="block pt-2 pb-2">
+                    <label for="firstname1">UTM Term</label>
+                    <template class="flex pt-1">
+                        <input 
+                            v-model="termUrlUTM" 
+                            class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full" 
+                            type="email"
+                            placeholder="email@gmail.com">
+                    </template>
+                </template>
+                <template class="block pt-2 pb-2">
+                    <!-- eslint-disable-next-line -->
+                    <label for="firstname1">UTM Tracking URL</label>
+                    <!-- <input 
+                            v-model="generatedLink" 
+                            class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full"  
+                            disabled> -->
+                            <!-- <p>{{ generatedLink }}</p> -->
+                            <p>{{ webAddress + sourceUrlUTM + mediumUrlUTM + campaignUrlUTM + contentUrlUTM + termUrlUTM}}</p>
+                </template>
+                <Button label="Copy Link" severity="success" plain text v-on:click="copyToClipboard()" icon="pi pi-check" />
+            </Dialog>
+
             <!-- Settings Side Bar -->
             <!-- eslint-disable-next-line -->
             <Sidebar v-model:visible="visible">
@@ -64,7 +134,6 @@
 
     <!-- Top Row of Stats -->
     <template class="grid">
-        <!-- class="md:col-3 md:col-offset-1 lg:col-6 lg:col-offset-3" -->
         <div class="col-10 col-offset-1 lg:col-3 lg:col-offset-1 md:col-10 md:col-offset-1">
             <Card>
                 <template #subtitle> Unique Page Visits </template>
@@ -138,7 +207,7 @@
                     <!--   align-items-center   -->
                     <!-- <template> -->
                         <!-- <Button icon="pi pi-plus" severity="help" rounded outlined aria-label="Favorite" /> -->
-                        <Button v-on:click="buildUTMLink()" class="pt-4" icon="pi pi-plus" severity="info" text rounded aria-label="Favorite" />
+                        <Button @click="UTMModalVisible = true" class="pt-4" icon="pi pi-plus" severity="info" text rounded aria-label="Favorite" />
                     <!-- </template> -->
                 </template>
                 <template #subtitle> 
@@ -230,8 +299,11 @@ export default {
             visible: false,
             modalVisible: false,
             editModalVisible: false,
+            UTMModalVisible: false,
             chartDataOperatingSystems: null,
             totalVisits: null,
+            generatedLink: null,
+            termUrlUTM: null,
             chartOptionsBrowsers: {
                 plugins: {
                     legend: {
@@ -271,9 +343,21 @@ export default {
             termUTM: false,
             chartData: null,
             chartOptions: null,
+            webAddress: null,
+            sourceUrlUTM: null,
+            mediumUrlUTM: null,
+            campaignUrlUTM: null,
+            contentUrlUTM: null,
+            termUrlUTM: null,
             data,
             users
         }
+    },
+    watch: {
+        // generatedLink() {
+        //     this.generatedLink = this.webAddress;
+        //     console.log(ths.generatedLink);
+        // }
     },
     beforeMount (){
         const auth = getAuth();

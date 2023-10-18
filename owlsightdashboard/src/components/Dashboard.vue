@@ -65,9 +65,7 @@
                     <template class="flex pt-1">
                         <input 
                             v-model="campaignUrlUTM" 
-                            class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full" 
-                            type="email"
-                            placeholder="email@gmail.com">
+                            class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full">
                     </template>
                 </template>
                 <template class="block pt-2 pb-2">
@@ -75,9 +73,7 @@
                     <template class="flex pt-1">
                         <input 
                             v-model="contentUrlUTM" 
-                            class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full" 
-                            type="email"
-                            placeholder="email@gmail.com">
+                            class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full">
                     </template>
                 </template>
                 <template class="block pt-2 pb-2">
@@ -85,22 +81,17 @@
                     <template class="flex pt-1">
                         <input 
                             v-model="termUrlUTM" 
-                            class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full" 
-                            type="email"
-                            placeholder="email@gmail.com">
+                            class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full">
                     </template>
                 </template>
                 <template class="block pt-2 pb-2">
                     <!-- eslint-disable-next-line -->
                     <label for="firstname1">UTM Tracking URL</label>
-                    <!-- <input 
-                            v-model="generatedLink" 
-                            class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full"  
-                            disabled> -->
-                            <!-- <p>{{ generatedLink }}</p> -->
+                        <div v-if="webAddress && sourceUrlUTM && mediumUrlUTM && campaignUrlUTM && contentUrlUTM && termUrlUTM">
                             <p>{{ webAddress + '?utm_source=' + sourceUrlUTM + '&utm_medium=' + mediumUrlUTM + '&utm_campaign=' + campaignUrlUTM + '&utm_content=' + contentUrlUTM + '&utm_term=' + termUrlUTM}}</p>
+                        </div>
                 </template>
-                <Button label="Copy Link" severity="success" plain text v-on:click="copyToClipboard()" icon="pi pi-check" />
+                <Button label="Copy Link" severity="success" plain text v-on:click="copyToClipboard(webAddress + '?utm_source=' + sourceUrlUTM + '&utm_medium=' + mediumUrlUTM + '&utm_campaign=' + campaignUrlUTM + '&utm_content=' + contentUrlUTM + '&utm_term=' + termUrlUTM)" icon="pi pi-check" />
             </Dialog>
 
             <!-- Settings Side Bar -->
@@ -493,6 +484,9 @@ export default {
             });
             })
             
+        },
+        copyToClipboard (clip) {
+            navigator.clipboard.writeText(clip);
         },
         changeUTMView(view) {
 

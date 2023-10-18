@@ -15,7 +15,7 @@
         Our pricing plans are tailored to be afordable and suit your business need.
     </p>
     <template class="grid">
-        <div class="col-3 col-offset-1">
+        <div class="col-10 col-offset-1 lg:col-3 lg:col-offset-1 md:col-10 md:col-offset-1">
             <Card :style="{
                 backgroundColor: freePaymentSelected ? '#5F57FF' : '',
                 }">
@@ -43,7 +43,7 @@
             </Card>
         </div>
         
-        <div class="col-4 col-offset-0 pb-5">
+        <div class="col-10 col-offset-1 lg:col-4 lg:col-offset-0 md:col-10 md:col-offset-1">
             <Card :style="{
                 backgroundColor: proPaymentSelected ? '#5F57FF' : '',
                 }">
@@ -71,7 +71,7 @@
                 </template>
             </Card>
         </div>
-        <div class="col-3 col-offset-0 pb-5">
+        <div class="col-10 col-offset-1 lg:col-3 lg:col-offset-0 md:col-10 md:col-offset-1">
             <Card :style="{
                 backgroundColor: premiumPaymentSelected ? '#5F57FF' : '',
                 }">

@@ -111,7 +111,7 @@ export default {
         });
     },
     copyScript () {
-      navigator.clipboard.writeText('<script>src="https://owlsight.onrender.com/main.js"' + '<' + '/script>');
+      navigator.clipboard.writeText('<script src="https://owlsight.onrender.com/main.js">' + '<' + '/script>');
     }
   }
 }

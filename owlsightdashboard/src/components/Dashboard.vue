@@ -101,7 +101,7 @@
                 <p>Insert script tag at the bottom of your website's body tag.</p>
                 <p>
                     <code>
-                    &lt;script>src="https://owlsight.onrender.com/main.js"&lt;/script>
+                    &lt;script src="https://owlsight.onrender.com/main.js">&lt;/script>
                     </code>
                 </p>
                 <Button label="Copy to clipboard" class="" plain text v-on:click="copyScript()" icon="pi pi-copy" />
@@ -527,7 +527,7 @@ export default {
             }
         },
         copyScript () {
-            navigator.clipboard.writeText('<script>src="https://owlsight.onrender.com/main.js"' + '<' + '/script>');
+            navigator.clipboard.writeText('<script src="https://owlsight.onrender.com/main.js">' + '<' + '/script>');
         },
         editBillingDetails () {
             console.log('todo');
